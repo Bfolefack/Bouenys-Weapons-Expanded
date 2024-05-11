@@ -96,6 +96,7 @@ function WeaponTable(props) {
                 (weapons[a[0]].attributes.length < weapons[b[0]].attributes.length ? -1 : 1)))
             break;
         default:
+            console.log("Default Weapon Sort")
             weaponSort = ((a: [string, boolean], b: [string, boolean]) =>
             ((weapons[a[0]].tier == weapons[b[0]].tier ?
                 (weapons[a[0]].name < weapons[b[0]].name ? -1 : 1)
@@ -292,8 +293,6 @@ function UpgradeRow(props) {
 }
 
 function UpgradeDetails(props) {
-    console.log(props.name)
-    console.log(upgrades[props.name])
     if (!upgrades[props.name]) {
         return (<></>)
     }
@@ -469,6 +468,75 @@ function WeaponBuilderWrapper(props) {
     )
 }
 
+function HomepageWrapper(props) {
+    if (props.tab != "Home") {
+        return (<></>)
+    }
+    return (
+        <>
+            <div className='side-div' style={{ width: "60%", height: "100%", marginLeft: "20%", lineHeight: "1.6" }}>
+                <h1>Welcome to Boueny's Weapons Expanded</h1>
+                <p>&emsp;&emsp;
+                    This is a collection of weapons and upgrades for Dungeons and Dragons 5th Edition. The weapons are designed to be balanced and flavorful, with a focus on providing a variety of options for players and DMs, while the upgrades are designed to be powerful and unique, greatly expanding 5e's weapon customization, and giving your players the chance to make their weapons truly legendary. This module is a work in progress, and will be updated and refined periodically.
+                </p>
+                <h2>Weapons Categories</h2>
+                <p>&emsp;&emsp;
+                    Weapons and weapon proficiencies work a little differently in Boueny's Weapons Expanded. Rather than being split into the classic four categories of Simple Melee, Simple Ranged, Martial Melee, and Martial Ranged, weapons are split into eight categories based on their properties and design. These categories are as follows:
+                </p>
+                <ul style={{width: "80%", marginLeft: "10%"}}>
+                    <li style={{margin: "0.5em"}}><b>Basic</b> - Simple weapons that require no or very little special training to use effectively</li>
+                    <li style={{margin: "0.5em"}}><b>Agile</b> - Lightweight weapons that rely on dexterity and finesse to kill with deadly efficiency</li>
+                    <li style={{margin: "0.5em"}}><b>Polearm</b> - Long armed weapons with a far reach that are extremely dangerous when paired with careful positioning and planning</li>
+                    <li style={{margin: "0.5em"}}><b>Cleaving</b> - Heavy weapons made to cut through flesh and leave severe bleeding wounds</li>
+                    <li style={{margin: "0.5em"}}><b>Brutal</b> - Weapons made to bludgeon, bruise, and crush bone, leaving enemies incapacitated, but alive.</li>
+                    <li style={{margin: "0.5em"}}><b>Throwing</b> - Weapons launched via muscle alone without the assistance of tension or explosives. </li>
+                    <li style={{margin: "0.5em"}}><b>Archery</b> - Weapons made from stiff materials with taut string to launch piercing ammunition. </li>
+                    <li style={{margin: "0.5em"}}><b>Firearms</b> - Metallic weapons made to launch specialized ammunition with explosive force, to devastating effect.</li>
+                </ul>
+                <p>&emsp;&emsp;
+                    Each weapon category has its own unique properties and playstyle, and can be used to create a wide variety of characters and builds.
+                </p>
+                <h2>Weapon Proficiencies</h2>
+                <p>&emsp;&emsp;
+                    Weapon proficiencies are also handled differently in Boueny's Weapons Expanded. Rather than gaining blanket proficiency with a wide variety of weapons, players gain proficiency with specific weapon categories in stages. There are four sequential stages of weapon proficiency, each granting access to a new selection of weapons. <br/>
+                </p>
+                <ul style={{width: "80%", marginLeft: "10%"}}>
+                    <li style={{marginBottom: "1em"}}><b>General Weapons Proficiency</b> - Grants proficiency with all weapons in the <em>Basic</em> category. All adventurers start with this proficiency, though most commoners will lack even this basic training. <br/> </li>
+                    <li style={{marginBottom: "1em"}}><b>Basic Proficiency</b> - Given a character has General Weapons Proficiency they can then gain Basic Proficiency in a weapon category. This grants proficiency with all <em>Green</em> weapons in that category. Basic proficiency represents a basic understanding of a weapon type and the ability to use it effectively in combat. This level of proficiency is expected among even low-level soldiers and bandits. <br/> </li>
+                    <li style={{marginBottom: "1em"}}><b>Advanced Proficiency</b> - Given a character has Basic Proficiency in a weapon category they can then gain Advanced Proficiency in that category. This grants proficiency with all <em>Yellow</em> weapons in that category. Advanced proficiency represents a deep understanding of a weapon type and the ability to use it to its full potential. This level of proficiency is expected among elite soldiers and experienced adventurers. <br/></li>
+                    <li style={{marginBottom: "1em"}}><b>Expert Proficiency</b> - Finally, given a character has Advanced Proficiency in a weapon category they can then gain Expert Proficiency for a  that category. This grants proficiency with a <b><em>SINGLE</em></b> <em>Red</em> weapon in that category. Expert proficiency represents an unprecedented degree of synchronicty and mastery over a single weapon, allowing the wielder to perform feats of martial prowess that would be impossible for lesser warriors. This level of proficiency is rarely found except among legendary warriors and heroes, and is the pinnacle of martial skill. A character may take multiple expert proficiencies, in a single weapon category or in multiple weapon categories. <br/> </li>
+                </ul>
+                <h3>Class Proficiencies</h3>
+                <p>&emsp;&emsp;The altered proficiency system above clashes with how D&D classically defines weapon proficiencies. Under this ruleset, martial classes (e.g. any class without spell slots) can take a new weapon proficiency alongside each ability score increase (therefore, if a feat is taken the proficiency is not gained). This means taking Basic proficiency in a new category, Advanced proficiency in a category you already have Basic proficiency for, or an Expert proficiency in a category you already have Advanced proficiency for. Other classes can gain proficiencies via the weapons training feat. Rules for starting proficiency by class, as well as clarifications for special weapon categories are provided below. These proficiencies are gained from your primary class and <em>cannot</em> be gained by multi-classing<br/> </p>
+                <ul style={{width: "80%", marginLeft: "10%"}}>
+                    <li style={{marginBottom: "0.5em"}}><b>Artificer</b> - Artificers gain proficiency with basic weapons, and gain basic proficiency in firearms.</li>
+                    <li style={{marginBottom: "0.5em"}}><b>Barbarian</b> - Barbarians gain proficiency with basic weapons, basic proficiency in any two categories, and advanced proficiency in any other two categories.</li>
+                    <li style={{marginBottom: "0.5em"}}><b>Bard</b> - Bards gain proficiency with basic weapons and may choose one basic proficiency and one advanced proficiency from Agile, Throwing, and Archery.</li>
+                    <li style={{marginBottom: "0.5em"}}><b>Cleric</b> - Clerics gain proficiency with basic weapons, and may choose two basic proficiencies from Brutal, Polearm, Cleaving, and Throwing.</li>
+                    <li style={{marginBottom: "0.5em"}}><b>Druid</b> - Druids gain proficiency with basic weapons and choose two basic proficiencies from Agile, Brutal, Polearm, Cleaving, and Throwing.</li>
+                    <li style={{marginBottom: "0.5em"}}><b>Fighter</b> - Fighters gain proficiency with basic weapons, basic proficiency in any three categories, and advanced proficiency in any other two categories.</li>
+                    <li style={{marginBottom: "0.5em"}}><b>Monk</b> - Monks gain proficiency with basic weapons and choose a basic proficiency and an advanced proficiency from Agile, Polearm, Cleaving, and Throwing. Monk weapons are any basic melee weapons that do not have the two-handed or heavy properties.</li>
+                    <li style={{marginBottom: "0.5em"}}><b>Paladin</b> - Paladins gain proficiency with basic weapons, basic proficiency in any two categories, and advanced proficiency in any other two categories.</li>
+                    <li style={{marginBottom: "0.5em"}}><b>Ranger</b> - Rangers gain proficiency with basic weapons, basic proficiency in any two categories, and advanced proficiency in any other two categories.</li>
+                    <li style={{marginBottom: "0.5em"}}><b>Rogue</b> - Rogues gain proficiency with basic weapons,  as well as two basic proficiencies and two advanced proficiencies from Agile,  Throwing, Archery, and Firearms.</li>
+                    <li style={{marginBottom: "0.5em"}}><b>Sorcerer</b> - Sorcerers gain proficiency with basic weapons and choose a basic proficiency from any category.</li>
+                    <li style={{marginBottom: "0.5em"}}><b>Warlock</b> - Warlocks gain proficiency with basic weapons and choose any two basic proficiencies from any category. Note: Pact of the blade warlocks cannot choose an expert (red) weapon as their pact weapon unless they already have proficiency with that weapon.</li>
+                    <li style={{marginBottom: "0.5em"}}><b>Wizard</b> - Wizards gain proficiency with basic weapons and choose a basic proficiency from any category.</li>
+                </ul>
+
+                <div style={{width: "60%", marginLeft: "20%", border: "1px solid grey", padding:"1em", paddingTop:"0px"}}>
+                    <h4>Feat: Weapons Training</h4>
+                    You have practiced extensively with a specific weapon or type of weapon, gaining the following benefits:<br/>
+                    &emsp;&emsp; - Increase your Strength or Dexterity score by 1, to a maximum of 20. <br/>
+                    &emsp;&emsp; - You gain two weapon proficiencies of your choice. <br/>
+                    This feat may be taken multiple times.
+                </div>
+
+            </div>
+        </>
+    )
+}
+
 function App() {
 
     const [tab, setTab] = useState("Weapons")
@@ -480,6 +548,7 @@ function App() {
                     <button onClick={() => setTab("Builder")} className="header-tab">Builder</button>
                     <button onClick={() => setTab("Upgrades")} className="header-tab">Upgrades</button>
                     <button onClick={() => setTab("Weapons")} className="header-tab">Weapons</button>
+                    <button onClick={() => setTab("Home")} className="header-tab">Home</button>
                     <h1>
                         Boueny's Weapons Expanded
                     </h1>
@@ -489,6 +558,7 @@ function App() {
                     <WeaponTableWrapper tab={tab} />
                     <UpgradeListWrapper tab={tab} />
                     <WeaponBuilderWrapper tab={tab} />
+                    <HomepageWrapper tab={tab} />
                 </div>
             </div>
         </>
