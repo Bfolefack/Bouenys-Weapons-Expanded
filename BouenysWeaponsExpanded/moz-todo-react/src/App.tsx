@@ -43,13 +43,13 @@ function WeaponTableWrapper(props) {
                 <button onClick={() => setWeaponCategory("Firearm")} className="weapon-tab">Firearm</button>
             </span>
 
-            <div style={{height: "90%"}}>
-                <div className='side-div' style={{width: "66%"}}>
+            <div style={{ height: "90%" }}>
+                <div className='side-div' style={{ width: "66%" }}>
                     <WeaponTable list={weaponList} setWeapon={setActiveWeaponCallback} />
                 </div>
-                <div className='side-div' style={{width: "33%"}}>
-                    <WeaponDetails name={activeWeapon}/>
-                    
+                <div className='side-div' style={{ width: "33%" }}>
+                    <WeaponDetails name={activeWeapon} />
+
                 </div>
             </div>
         </>
@@ -57,7 +57,7 @@ function WeaponTableWrapper(props) {
 }
 
 function WeaponTable(props) {
-    const weaponElements = props.list.map(([weapon, show]) => <WeaponRow weapon={weapon} show={show} setWeapon={props.setWeapon}/>)
+    const weaponElements = props.list.map(([weapon, show]) => <WeaponRow weapon={weapon} show={show} setWeapon={props.setWeapon} />)
     const [weaponSortRule, setWeaponSortRule] = useState("Default")
 
     let weaponSort;
@@ -208,19 +208,61 @@ function UpgradeListWrapper(props) {
         setActiveUpgrade(upgrade);
     }
 
-    
+
     const [activeUpgrade, setActiveUpgrade] = useState("")
 
     const upgradeList = Object.keys(upgrades).sort((a: string, b: string) => (upgrades[a].name < upgrades[b].name ? -1 : 1))
     return (
         <>
             <div className='side-div' style={{ width: "33%" }}>
-                <UpgradeList upgradeList={upgradeList} callback={setActiveUpgradeCallback}/>
+                <UpgradeList upgradeList={upgradeList} callback={setActiveUpgradeCallback} />
             </div>
             <div className='side-div' style={{ width: "66%" }}>
-                <UpgradeDetails name={activeUpgrade}/>
+                <UpgradeDetails name={activeUpgrade} />
             </div>
         </>
+    )
+}
+
+function WeaponItem(props) {
+    const weapon = weapons[props.weapon]
+
+    let weaponColor;
+    switch (weapon.tier) {
+        case 0:
+            weaponColor = "basic-weapon"
+            break;
+        case 1:
+            weaponColor = "advanced-weapon"
+            break;
+        case 2:
+            weaponColor = "expert-weapon"
+            break;
+    }
+
+    const onTrigger = (event) => {
+        props.setWeapon(props.weapon)
+    }
+
+    return (
+        <li className={weaponColor + " list-element"} onClick={onTrigger} style={{overflow: "hidden"}}>{weapon.name}</li>
+    )
+}
+
+function WeaponList(props) {
+    if(!props.show) {
+        return (<></>)
+    }
+
+    const weaponElements = props.list.map(([weapon]) => <WeaponItem weapon={weapon} setWeapon={props.setWeapon} />)
+    return (
+        <div className='scrolling-wrapper'>
+            <nav>
+                <ul>
+                    {weaponElements}
+                </ul>
+            </nav>
+        </div>
     )
 }
 
@@ -267,96 +309,98 @@ function UpgradeDetails(props) {
     const weaponNames = Object.keys(weapons);
     let weaponList: [string, boolean][] = [];
     for (let i = 0; i < weaponNames.length; i++) {
-        if(goodUpgrade(weaponNames[i], props.name))
+        if (UpgradeMatchesWeapon(weaponNames[i], props.name))
             weaponList.push([weaponNames[i], true])
-    }   
+    }
 
-    return (
-        <div style={{height: "100%", margin: 0, padding: 0}}>
-            <div className='scrolling-wrapper' style={{height: "50%"}}>
-                <h1 style={{margin: "0px"}}>{upgrade.name}</h1>
-                <b>
-                    Proficiency Cost: {"X".repeat(upgrade.proficiencyCost)} <br/>
-                    Attribute Prerequisites: {upgrade.attributePrereqs == undefined ? "None" : upgrade.attributePrereqs.join(", ")} <br/>
-                    Weapon Type Prerequisites: {upgrade.typePrereq ? upgrade.typePrereq.toString() : "None"} <br/>
-                    Damage Type Prerequisites: {upgrade.damagePrereqs == undefined ? "None" : upgrade.damagePrereqs.join(" or ")} <br/><br/>
-                    Description:
-                </b>
-                <p style={{margin: 0}}>{upgrade.description}</p>
-                <div hidden={upgrade.advanceCost == undefined}>
-                    <br/>
+    if(!props.truncate){
+        return (
+            <div style={{ height: "100%", margin: 0, padding: 0 }}>
+                <div className='scrolling-wrapper' style={{ height: "50%", overflow: "auto"}}>
+                    <h1 style={{ margin: "0px" }}>{upgrade.name}</h1>
                     <b>
-                        Advance Cost: {"X".repeat(upgrade.advanceCost)} <br/>
-                        Advance Description:
+                        Proficiency Cost: {"X".repeat(upgrade.proficiencyCost)} <br />
+                        Attribute Prerequisites: {upgrade.attributePrereqs == undefined ? "None" : upgrade.attributePrereqs.join(", ")} <br />
+                        Weapon Type Prerequisites: {upgrade.typePrereq ? upgrade.typePrereq.toString() : "None"} <br />
+                        Damage Type Prerequisites: {upgrade.damagePrereqs == undefined ? "None" : upgrade.damagePrereqs.join(" or ")} <br /><br />
+                        Description:
                     </b>
-                    <p style={{margin: 0}}>{upgrade.advanceDescription}</p>
+                    <p style={{ margin: 0 }}>{upgrade.description}</p>
+                    <div hidden={upgrade.advanceCost == undefined}>
+                        <br />
+                        <b>
+                            Advance Cost: {"X".repeat(upgrade.advanceCost)} <br />
+                            Advance Description:
+                        </b>
+                        <p style={{ margin: 0 }}>{upgrade.advanceDescription}</p>
+                    </div>
+                </div>
+                <div style={{ height: "50%" }}>
+                    <WeaponTable list={weaponList} setWeapon={setActiveWeaponCallback} />
                 </div>
             </div>
-            <div style={{height: "50%"}}>
-                <WeaponTable list={weaponList} setWeapon={setActiveWeaponCallback}/>
+        )
+    }
+    return (
+        <div style={{ height: "100%", margin: 0, padding: 0 }}>
+            <div className='scrolling-wrapper' style={{ height: "100%", overflow: "auto" }}>
+                <h1 style={{ margin: "0px" }}>{upgrade.name}</h1>
+                <b>
+                    Proficiency Cost: {"X".repeat(upgrade.proficiencyCost)} <br />
+                    Attribute Prerequisites: {upgrade.attributePrereqs == undefined ? "None" : upgrade.attributePrereqs.join(", ")} <br />
+                    Weapon Type Prerequisites: {upgrade.typePrereq ? upgrade.typePrereq.toString() : "None"} <br />
+                    Damage Type Prerequisites: {upgrade.damagePrereqs == undefined ? "None" : upgrade.damagePrereqs.join(" or ")} <br /><br />
+                    Description:
+                </b>
+                <p style={{ margin: 0 }}>{upgrade.description}</p>
+                <div hidden={upgrade.advanceCost == undefined}>
+                    <br />
+                    <b>
+                        Advance Cost: {"X".repeat(upgrade.advanceCost)} <br />
+                        Advance Description:
+                    </b>
+                    <p style={{ margin: 0 }}>{upgrade.advanceDescription}</p>
+                </div>
             </div>
         </div>
     )
 }
 
-
-function App() {
-
-    const [tab, setTab] = useState("Weapons")
-
-    return (
-        <>
-            <div className='main-body'>
-                <header className='header'>
-                    <button onClick={() => setTab("Weapons")} className="header-tab">Weapons</button>
-                    <button onClick={() => setTab("Upgrades")} className="header-tab">Upgrades</button>
-                    <button onClick={() => setTab("Attributes")} className="header-tab">Attributes</button>
-                    <h1>
-                        Boueny's Weapons Expanded
-                    </h1>
-                </header>
-
-                <div style={{ height: "89%" }}>
-                    <WeaponTableWrapper tab={tab} />
-                    <UpgradeListWrapper tab={tab} />
-                </div>
-            </div>
-        </>
-    );
-}
-
-function goodUpgrade(weaponName: string, upgradeName: string) {
+function UpgradeMatchesWeapon(weaponName: string, upgradeName: string) {
+    if(weaponName == undefined || upgradeName == undefined || weapons[weaponName] == undefined || upgrades[upgradeName] == undefined){
+        return true;
+    }
     let upgrade = upgrades[upgradeName]
-    if(weapons[weaponName].upgrade <= 0)
+    if (weapons[weaponName].upgrade <= 0)
         return false
-    if(upgrade.attributePrereqs != undefined){
+    if (upgrade.attributePrereqs != undefined) {
         for (const attribute of upgrade.attributePrereqs) {
-            if(attribute == AttributeName.DelFin){
-                if(!weapons[weaponName].attributes.map((attribute) => (attribute.name)).includes(AttributeName.Fine)&& !weapons[weaponName].attributes.map((attribute) => (attribute.name)).includes(AttributeName.Deli)){
+            if (attribute == AttributeName.DelFin) {
+                if (!weapons[weaponName].attributes.map((attribute) => (attribute.name)).includes(AttributeName.Fine) && !weapons[weaponName].attributes.map((attribute) => (attribute.name)).includes(AttributeName.Deli)) {
                     return false
                 } else {
                     continue
                 }
             }
-            if(attribute == AttributeName.OneVer){
-                if(weapons[weaponName].attributes.map((attribute) => (attribute.name)).includes(AttributeName.Two)){
+            if (attribute == AttributeName.OneVer) {
+                if (weapons[weaponName].attributes.map((attribute) => (attribute.name)).includes(AttributeName.Two)) {
                     return false
                 } else {
                     continue
                 }
             }
-            if(attribute == AttributeName.ReAmmo){
-                if( !weapons[weaponName].attributes.map((attribute) => (attribute.name)).includes(AttributeName.Ammo) && 
+            if (attribute == AttributeName.ReAmmo) {
+                if (!weapons[weaponName].attributes.map((attribute) => (attribute.name)).includes(AttributeName.Ammo) &&
                     !weapons[weaponName].attributes.map((attribute) => (attribute.name)).includes(AttributeName.Reach) &&
-                    !weapons[weaponName].attributes.map((attribute) => (attribute.name)).includes(AttributeName.Thrown)){
+                    !weapons[weaponName].attributes.map((attribute) => (attribute.name)).includes(AttributeName.Thrown)) {
                     return false
                 } else {
                     continue
                 }
             }
 
-            if(attribute == AttributeName.Melee){
-                if(weapons[weaponName].attributes.map((attribute) => (attribute.name)).includes(AttributeName.Ammo)){
+            if (attribute == AttributeName.Melee) {
+                if (weapons[weaponName].attributes.map((attribute) => (attribute.name)).includes(AttributeName.Ammo)) {
                     return false
                 } else {
                     continue
@@ -373,11 +417,11 @@ function goodUpgrade(weaponName: string, upgradeName: string) {
             return false
         }
     }
-    
-    
+
+
     if (upgrade.damagePrereqs != undefined) {
         let damageFound = false;
-        for(const damageType of upgrade.damagePrereqs)
+        for (const damageType of upgrade.damagePrereqs)
             if (weapons[weaponName].formula.types.includes(damageType)) {
                 damageFound = true;
             }
@@ -386,5 +430,69 @@ function goodUpgrade(weaponName: string, upgradeName: string) {
     return true
 }
 
+function WeaponBuilderWrapper(props) {
+    if (props.tab != "Builder") {
+        return (<></>)
+    }
+
+    let weaponList = Object.keys(weapons).map((weapon) => [weapon, true]) 
+    weaponList.sort((a: (string | boolean)[], b: (string | boolean)[]) => (weapons[a[0] as string].name < weapons[b[0] as string].name ? -1 : 1))
+    const [activeWeapon, setActiveWeapon] = useState("")
+    const [activeUpgrade, setActiveUpgrade] = useState("")
+    let setActiveWeaponCallback = (weapon: string) => {
+        setActiveWeapon(weapon);
+    }
+    let setActiveUpgradeCallback = (upgrade: string) => {
+        setActiveUpgrade(upgrade);
+    }
+
+
+    
+    let upgradeList = Object.keys(upgrades).filter((upgrade) => UpgradeMatchesWeapon(activeWeapon, upgrade))
+    return (
+        <>
+            <div className='side-div' style={{ width: "20%" }}>
+                <WeaponList list={weaponList} setWeapon={setActiveWeaponCallback} show={true} active/>
+            </div>
+            <div className='side-div' style={{ width: "50%" }}>
+            </div>
+            <div className='side-div' style={{ width: "30%" }}>
+                <div style={{height:"30%"}}>
+                    <UpgradeList upgradeList={upgradeList} callback={setActiveUpgradeCallback} />
+                </div>
+                <div style={{height:"70%"}}>
+                    <UpgradeDetails name={activeUpgrade} truncate={true}/>
+                </div>
+            </div>
+        </>
+
+    )
+}
+
+function App() {
+
+    const [tab, setTab] = useState("Weapons")
+
+    return (
+        <>
+            <div className='main-body'>
+                <header className='header'>
+                    <button onClick={() => setTab("Builder")} className="header-tab">Builder</button>
+                    <button onClick={() => setTab("Upgrades")} className="header-tab">Upgrades</button>
+                    <button onClick={() => setTab("Weapons")} className="header-tab">Weapons</button>
+                    <h1>
+                        Boueny's Weapons Expanded
+                    </h1>
+                </header>
+
+                <div style={{ height: "89%" }}>
+                    <WeaponTableWrapper tab={tab} />
+                    <UpgradeListWrapper tab={tab} />
+                    <WeaponBuilderWrapper tab={tab} />
+                </div>
+            </div>
+        </>
+    );
+}
 
 export default App

@@ -13,7 +13,9 @@ export var upgrades = {
         name: "Balanced",
         attributePrereqs: [AttributeName.Ver],
         proficiencyCost: 2,
-        description: "This weapon does its versatile damage whether you are wielding it one-handed or not. A weapon with the balanced upgrade is considered heavy for dual wielding purposes."
+        description: "This weapon does its versatile damage whether you are wielding it one-handed or not. A weapon with the balanced upgrade is considered heavy for dual wielding purposes.",
+        advanceCost: 3,
+        advanceDescription: "This weapon does its versatile damage whether you are wielding it one-handed or not."
     },
     // Brawler
     // Prereq: One-Handed/Versatile, Bludgeoning
@@ -46,7 +48,7 @@ export var upgrades = {
         proficiencyCost: 1,
         description: "If an attack from this weapon would bloody a creature, treat the hit as a critical hit and roll additional damage accordingly.",
         advanceCost: 3,
-        advanceDescription: "If an attack from this weapon would bloody a creature, treat the hit as a critical hit and roll additional damage accordingly. Additionally all attacks against a bloodied creature deal an additional die of damage."
+        advanceDescription: "If an attack from this weapon would bloody a creature, treat the hit as a critical hit and roll additional damage accordingly. Additionally all attacks made with this weapon against a bloodied creature deal an additional die of damage."
     },
 
     // Charge
@@ -64,7 +66,7 @@ export var upgrades = {
         proficiencyCost: 1,
         description: "If the first attack made after moving 20+ feet in a straight line  is made with this weapon the attack deals one extra die of damage.",
         advanceCost: 2,
-        advanceDescription: "If the first attack made after moving 10+ feet in a straight line  is made with this weapon the attack has advantage, and deals an extra die of damage."
+        advanceDescription: "If the first attack made after moving 20+ feet in a straight line  is made with this weapon the attack has advantage, and deals an extra die of damage."
     },
 
 
@@ -145,7 +147,7 @@ export var upgrades = {
     // Upon landing an attack with this weapon, you may use your bonus action to disarm the target. The target must make a dexterity or strength saving throw. If your opponent is dual-wielding you may choose which weapon to disarm them of.
     Disarm: {
         name: "Disarm",
-        attributePrereq: AttributeName.DelFin,
+        attributePrereqs: [AttributeName.DelFin, AttributeName.Melee],
         proficiencyCost: 1,
         description: "Upon landing an attack with this weapon, you may use your bonus action to disarm the target. The target must make a dexterity or strength saving throw. If your opponent is dual-wielding you may choose which weapon to disarm them of."
     },
@@ -244,7 +246,7 @@ export var upgrades = {
         proficiencyCost: 1,
         description: "This weapon's attacks ignore the target's resistance to piercing or slashing damage.",
         advanceCost: 3,
-        advanceDescription: "This weapon's attacks ignore the target's resistance to piercing or slashing damage. Additionally on a critical or bloodying hit, the target’s AC is reduced by 10 until the end of your next turn."
+        advanceDescription: "This weapon's attacks ignore the target's resistance to piercing or slashing damage. Additionally on a critical or bloodying hit, the target’s AC is reduced by 10 until the end of its next turn."
     },
 
     // Intimidating    
@@ -271,7 +273,7 @@ export var upgrades = {
     Intuitive: {
         name: "Intuitive",
         proficiencyCost: 0,
-        description: "The required proficiency bonus to wield this weapon is halved."
+        description: "The proficiency cost of this weapon is halved (rounding up)."
     },
 
     // Knockback

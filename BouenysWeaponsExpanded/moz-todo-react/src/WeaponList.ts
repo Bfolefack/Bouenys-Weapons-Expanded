@@ -890,7 +890,7 @@ export var weapons: WeaponMap = {
         1,
         0,
         WeaponType.Firearm,
-        [new Attribute(AttributeName.Ammo, [120, 360]),
+        [new Attribute(AttributeName.Ammo, [50, 150]),
         new Attribute(AttributeName.Pow),
         new Attribute(AttributeName.Mis, [2, 1])]),
     // Revolver	250 GP	1d8 piercing	x2	x1	Ammo(60/240), Light, Powder, Reload(6), Misfire(1/1d10),
@@ -950,7 +950,7 @@ export var weapons: WeaponMap = {
         WeaponType.Firearm,
         [new Attribute(AttributeName.Ammo, [200, 400]),
         new Attribute(AttributeName.Pow),
-        new Attribute(AttributeName.Rel, [8]),
+        new Attribute(AttributeName.Rel, [4]),
         new Attribute(AttributeName.Two),
         new Attribute(AttributeName.Mis, [3, 2])]),
     // Shotgun	350 GP	2d8 Piercing	x3	x2	Ammo(30/90), Powder, Reload(2), Two-Handed, Misfire (2/2d10)
