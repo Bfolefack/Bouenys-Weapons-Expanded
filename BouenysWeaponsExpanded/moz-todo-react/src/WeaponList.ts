@@ -185,8 +185,7 @@ export var weapons: WeaponMap = {
         2,
         1,
         WeaponType.Agile,
-        [new Attribute(AttributeName.Deli),
-        new Attribute(AttributeName.Spec)]),
+        [new Attribute(AttributeName.Deli)]),
     // Whip Sword	1,000 GP	2d6 slashing	19-20/x3	x4	Delicate, Reach
     "WhipSword": new Weapon(
         "Whip Sword",
@@ -754,7 +753,8 @@ export var weapons: WeaponMap = {
         3,
         2,
         WeaponType.Thrown,
-        [new Attribute(AttributeName.Thrown, [60, 240]),
+        [new Attribute(AttributeName.Fine),
+        new Attribute(AttributeName.Thrown, [60, 240]),
         new Attribute(AttributeName.Light),
         new Attribute(AttributeName.Ret)]),
     // Archery       

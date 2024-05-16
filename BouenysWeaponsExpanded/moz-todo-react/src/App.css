@@ -22,6 +22,15 @@
   right: 0px;
 }
 
+.feat {
+  width: 60%;
+  margin-left: 20%;
+  border: 1px solid grey;
+  padding:1em;
+  padding-top:0px;
+}
+
+
 .main-body {
   background-color: #1d1d1d;
   padding: 0;
@@ -158,4 +167,13 @@
 
 .read-the-docs {
   color: #888;
+}
+
+nav {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 24px;
+  left: 24px;
+  max-height: calc(100vh - 40px);
+  overflow: auto;
 }

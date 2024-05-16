@@ -45,7 +45,7 @@ export var upgrades = {
     Bleed: {
         name: "Bleed",
         damagePrereqs: [DamageType.Slash],
-        proficiencyCost: 1,
+        proficiencyCost: 2,
         description: "If an attack from this weapon would bloody a creature, treat the hit as a critical hit and roll additional damage accordingly.",
         advanceCost: 3,
         advanceDescription: "If an attack from this weapon would bloody a creature, treat the hit as a critical hit and roll additional damage accordingly. Additionally all attacks made with this weapon against a bloodied creature deal an additional die of damage."
@@ -215,9 +215,9 @@ export var upgrades = {
         name: "Focus",
         attributePrereqs: [AttributeName.Ammo],
         proficiencyCost: 1,
-        description: "You may take an action to give yourself an additional +5 (on top of any existing bonuses) to your next attack with this weapon before the end of your next turn.",
+        description: "You may take an action to give yourself an additional +5 to hit (on top of any existing bonuses) to your next attack with this weapon before the end of your next turn.",
         advanceCost: 2,
-        advanceDescription: "You may take an action to give yourself an additional +10 (on top of any existing bonuses) to your next attack with this weapon. This effect expires at the end of your next turn."
+        advanceDescription: "You may take an action to give yourself an additional +10 to hit (on top of any existing bonuses) to your next attack with this weapon. This effect expires at the end of your next turn."
     },
 
     // Hobble
@@ -246,7 +246,7 @@ export var upgrades = {
         proficiencyCost: 1,
         description: "This weapon's attacks ignore the target's resistance to piercing or slashing damage.",
         advanceCost: 3,
-        advanceDescription: "This weapon's attacks ignore the target's resistance to piercing or slashing damage. Additionally on a critical or bloodying hit, the target’s AC is reduced by 10 until the end of its next turn."
+        advanceDescription: "This weapon's attacks ignore the target's resistance to piercing or slashing damage. Additionally on a critical or bloodying hit, the target’s AC is reduced by 5 until the end of its next turn."
     },
 
     // Intimidating    
@@ -273,7 +273,7 @@ export var upgrades = {
     Intuitive: {
         name: "Intuitive",
         proficiencyCost: 0,
-        description: "The proficiency cost of this weapon is halved (rounding up)."
+        description: "The proficiency cost of this weapon is halved (rounding up). This upgrade may be taken multiple times, however, each upgrade occupies its own slot."
     },
 
     // Knockback
@@ -384,7 +384,7 @@ export var upgrades = {
         name: "Silenced",
         attributePrereqs: [AttributeName.Pow],
         proficiencyCost: 0,
-        description: "This weapon does not create the loud bang signature of powder weapons. It is still audible when fired, but is not easily heard through walls or from a distance."
+        description: "This weapon does not create the loud bang signature of powder weapons. It is still audible when fired, but is not easily heard through thick walls or from a distance."
     },
 
     // Steady

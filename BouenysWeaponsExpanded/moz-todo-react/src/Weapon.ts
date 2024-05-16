@@ -1,4 +1,5 @@
 import React, { ReactElement } from "react";
+import { attributes } from "./AttributeList";
 
 class Weapon {
     name: string;
@@ -102,6 +103,8 @@ enum AttributeName {
 class Attribute {
     name: AttributeName;
     stats: number[];
+    description: string;
+    short_description: string;
 
     constructor(name: AttributeName, stats?: number[]) {
         this.name = name;
@@ -109,6 +112,8 @@ class Attribute {
             this.stats = [];
         else if (stats)
             this.stats = stats;
+        this.description = attributes[name].description;
+        this.short_description = attributes[name].short_description;
     }
 
     toString() {
