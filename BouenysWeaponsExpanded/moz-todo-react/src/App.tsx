@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { weapons } from './WeaponList'
 import { upgrades } from './UpgradeList'
@@ -59,8 +59,6 @@ function WeaponTable(props) {
 
     let weaponSort;
 
-    
-    // console.log(weaponSortRule)
     switch (weaponSortRule) {
         case "Name":
             weaponSort = ((a: [string, boolean], b: [string, boolean]) => (weapons[a[0]].name < weapons[b[0]].name ? -1 : 1))
@@ -108,7 +106,6 @@ function WeaponTable(props) {
     const light = { backgroundColor: "#dddddd", color: "#1d1d1d" };
 
     props.list.sort(weaponSort);
-    // console.log(props.list)
     let weaponElements = props.list.map(([weapon, show]) => <WeaponRow weapon={weapon} show={show} setWeapon={props.setWeapon} />)
 
 
@@ -444,19 +441,132 @@ function UpgradeMatchesWeapon(weaponName: string, upgradeName: string) {
     return true
 }
 
+function UpgradeBlock(props) {
+    console.log("UpgradeBlock", props.name, props.count)
+    if(props.name == "Critical"){
+        let out = [0]
+        for(let i = 1; i < props.count; i++){
+            out.push(i)
+        }
+        return out.map((i) => <li className='list-element basic-row' onClick={() => props.callback(props.name)}><b>{upgrades[props.name].name + "+".repeat(i)}</b></li>)
+    } else {
+        return (
+            <li className='list-element basic-row' onClick={() => props.callback(props.name)}>
+                <b>{upgrades[props.name].name + "+".repeat(props.count - 1)}</b>
+            </li>
+        )
+    
+    }
+}
+
 function WeaponBuilderWrapper(props) {
     let weaponList = Object.keys(weapons).map((weapon) => [weapon, true]) 
     weaponList.sort((a: (string | boolean)[], b: (string | boolean)[]) => (weapons[a[0] as string].name < weapons[b[0] as string].name ? -1 : 1))
     const [activeWeapon, setActiveWeapon] = useState("")
     const [activeUpgrade, setActiveUpgrade] = useState("")
+    const [builderUpgradeList, setBuilderUpgradeList] = useState<[string, number][]>([])
+    const [maxUpgradeCount, setMaxUpgradeCount] = useState(0)
+    const [upgradeCount, setUpgradeCount] = useState(0)
+    const [upgradeBlocks, setUpgradeBlocks] = useState<JSX.Element[]>([(<></>)])
+
     let setActiveWeaponCallback = (weapon: string) => {
         setActiveWeapon(weapon);
+        setMaxUpgradeCount(weapons[weapon].upgrade);
         setActiveUpgrade("");
     }
     let setActiveUpgradeCallback = (upgrade: string) => {
         setActiveUpgrade(upgrade);
     }
 
+    let setBuilderUpgradeListCallback = (list: [string, number][]) => {
+        console.log("Setting Builder Upgrade List", list)
+        setBuilderUpgradeList(list);
+        console.log("Builder Upgrade List", builderUpgradeList)
+        setUpgradeBlocks(builderUpgradeList.map(([upgrade, count]) => <UpgradeBlock name={upgrade} count={count} callback={setActiveUpgradeCallback} />))
+    }
+
+
+
+    function addUpgrade() {
+        for (let i = 0; i < builderUpgradeList.length; i++) {
+            if (builderUpgradeList[i][0] == activeUpgrade) {
+                switch (activeUpgrade) {
+                    case "Cleave":
+                    case "Concealed":
+                    case "Concuss":
+                    case "Demolish":
+                    case "Disarm":
+                    case "Explosive":
+                    case "Feint":
+                    case "Hobble":
+                    case "Intuitive":
+                    case "Longshot":
+                    case "Parry":
+                    case "Phalanx":
+                    case "PointBlank":
+                    case "Quickdraw":
+                    case "Riposte":
+                    case "Silenced":
+                    case "Trip":
+                    case "Vigilant":
+                    // Non-advanceable upgrades
+                        return;
+                    case "Balanced" :
+                    case "Bleed" :
+                    case "Brawler" :
+                    case "Charge" :
+                    case "Deadeye" :
+                    case "Execute" :
+                    case "Focus" :
+                    case "Honed" :
+                    case "Intimidating" :
+                    case "Knockback" :
+                    case "Steady" :
+                        if (builderUpgradeList[i][1] == 2) {
+                            return;
+                        } else {
+                            builderUpgradeList[i][1]++;
+                            setBuilderUpgradeListCallback(builderUpgradeList);
+                            return;
+                        }
+                    case "ExtendedStock" :
+                    case "Reliable" :
+                        builderUpgradeList[i][1]++;
+                        setBuilderUpgradeListCallback(builderUpgradeList);
+                        return;
+                    case "Critical" :
+                        if(upgradeCount < maxUpgradeCount){
+                            builderUpgradeList[i][1]++;
+                            setBuilderUpgradeListCallback(builderUpgradeList);
+                            setUpgradeCount(upgradeCount+ 1);
+                        }
+                        return;
+                }
+            }
+        }
+        if(upgradeCount < maxUpgradeCount){
+            builderUpgradeList.push([activeUpgrade, 1])
+            setBuilderUpgradeListCallback(builderUpgradeList)
+            setUpgradeCount(upgradeCount + 1);
+        }
+    }
+
+    function removeUpgrade(remove : string) {
+            for(let i = 0; i < builderUpgradeList.length; i++){
+                if(remove == "" ? builderUpgradeList[i][0] == activeUpgrade : builderUpgradeList[i][0] == remove){
+                    if(builderUpgradeList[i][0] == "Critical" && builderUpgradeList[i][1] > 1){
+                        builderUpgradeList[i][1]--;
+                        setBuilderUpgradeListCallback(builderUpgradeList);
+                        setUpgradeCount(upgradeCount - 1)
+                        return;
+                    }
+                    builderUpgradeList.splice(i, 1)[0];
+                    setBuilderUpgradeListCallback(builderUpgradeList);
+                    setUpgradeCount(upgradeCount - 1)
+                    return;
+                }
+            }
+    }
 
     
     let upgradeList = Object.keys(upgrades).filter((upgrade) => UpgradeMatchesWeapon(activeWeapon, upgrade))
@@ -470,13 +580,28 @@ function WeaponBuilderWrapper(props) {
                 <WeaponList list={weaponList} setWeapon={setActiveWeaponCallback} show={true} active/>
             </div>
             <div className='side-div' style={{ width: "50%" }}>
+                
+                <div style={{height:"10%"}}>
+                    <h1>{weapons[activeWeapon] == undefined ? "" : weapons[activeWeapon].name}</h1>
+                </div>
+                <div style={{height:"30%"}}>
+                    <WeaponDetails weapon={weapons[activeWeapon]} />
+                </div>
+                <h2>Upgrades {upgradeCount}/{maxUpgradeCount}</h2>
+                <ul className='scrolling-wrapper' style={{height:"30%"}}>
+                    {upgradeBlocks}
+                </ul>
             </div>
             <div className='side-div' style={{ width: "30%" }}>
                 <div style={{height:"30%"}}>
                     <UpgradeList upgradeList={upgradeList} callback={setActiveUpgradeCallback} />
                 </div>
-                <div style={{height:"70%"}}>
+                <div style={{height:"60%"}}>
                     <UpgradeDetails name={activeUpgrade} truncate={true}/>
+                </div>
+                <div style={{height:"10%"}}>
+                    <button style={{width: "50%", height: "100%", backgroundColor: "#115522", color: "#dddddd"}} onClick={addUpgrade}>Add Upgrade</button>
+                    <button style={{width: "50%", height: "100%", backgroundColor: "#552219", color: "#dddddd"}} onClick={() => removeUpgrade("")}>Remove Upgrade</button>
                 </div>
             </div>
         </span>
@@ -500,17 +625,15 @@ function HomepageWrapper(props) {
         headingList.push([title, level, id])
     }
 
-    let toc = headingList.map(([title, level, id]) => <li style={{marginLeft: level + "em"}}><u><a href={"#" + id.replace(/ /g, "")}>{title}</a></u></li>)
-
-    console.log(headings)
-
+    let toc = headingList.map(([title, level, id]) => (title == "null") ? (<></>) : (<li style={{marginLeft: level + "em"}}><u><a href={"#" + id.replace(/ /g, "")}>{title}</a></u></li>))
+    
 
     return (
         <span className='scrolling-wrapper' style={{ display: show, height: "100%", width: "100%"}}>
             <nav className='side-div' style={{width: "20%", lineHeight: "1.6"}}>
                 {toc}
             </nav>
-            <div className='side-div' style={{ width: "60%", height: "100%", lineHeight: "1.6" }}>
+            <div className='side-div' style={{ width: "60%", height: "100%", lineHeight: "1.6"}}>
                 <h1  id="home" >Welcome to Boueny's Weapons Expanded</h1>
                 <p>&emsp;&emsp;
                     This is a collection of weapons and upgrades for Dungeons and Dragons 5th Edition. The weapons are designed to be balanced and flavorful, with a focus on providing a variety of options for players and DMs, while the upgrades are designed to be powerful and unique, greatly expanding 5e's weapon customization, and giving your players the chance to make their weapons truly legendary. This module is a work in progress, and will be updated and refined periodically.
@@ -654,20 +777,31 @@ function HomepageWrapper(props) {
 }
 
 function App() {
-
-    const [tab, setTab] = useState("Home")
+    const [initialized, setInitialized] = useState(false)
+    const [tab, setTab] = useState("")
 
     function goToHome(){
         setTab("Home")
         window.location.href = "#home"
     }
 
+    function initialize(){
+        if(!initialized){
+            setInitialized(true)
+            setTab("Home")
+        }
+    }
+
+    useEffect(() => {
+        initialize()
+    })
+
     return (
         <>
             <div className='main-body'>
                 
                     <header className='header' >
-                        <button onClick={() => setTab("Builder")} className="header-tab">Builder</button>
+                        <button onClick={() => setTab("Builder")} className="header-tab">Builder (WIP)</button>
                         <button onClick={() => setTab("Upgrades")} className="header-tab">Upgrades</button>
                         <button onClick={() => setTab("Weapons")} className="header-tab">Weapons</button>
                         <button onClick={() => setTab("Home")} className="header-tab">Home</button>

@@ -787,7 +787,7 @@ export var weapons: WeaponMap = {
     "HeavyCrossbow": new Weapon(
         "Heavy Crossbow",
         50,
-        new DiceFormula([[1, 10]], [DamageType.Pier]),
+        new DiceFormula([[1, 12]], [DamageType.Pier]),
         20,
         3,
         2,
@@ -813,7 +813,7 @@ export var weapons: WeaponMap = {
     // Recurve Bow	100 GP	1d10 piercing	x2	x2	Ammo(100/400), Heavy, Two-Handed
     "RecurveBow": new Weapon(
         "Recurve Bow",
-        100,
+        150,
         new DiceFormula([[1, 10]], [DamageType.Pier]),
         20,
         2,
@@ -826,7 +826,7 @@ export var weapons: WeaponMap = {
     // Wrist Crossbow	150 GP	1d4 piercing	x3	x3	Ammo(30/120), Glove, Light, Loading
     "WristCrossbow": new Weapon(
         "Wrist Crossbow",
-        150,
+        25,
         new DiceFormula([[1, 4]], [DamageType.Pier]),
         20,
         3,
