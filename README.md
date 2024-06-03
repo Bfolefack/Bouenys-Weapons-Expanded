@@ -1,2 +1,2 @@
-# React
- Projects made using the react framework
+# Boueny's Weapons Expanded
+This is a website built in React to showcase the Boueny's Weapons Expanded module for Dungeons and Dragons 5th Edition. The module is a collection of weapons and modified rules for the game. The website is a tool for Dungeon Masters to easily access the weapons and rules in the module. The website is hosted on GitHub Pages and can be accessed [here](https://bfolefack.github.io/Bouenys-Weapons-Expanded/).
