@@ -273,7 +273,7 @@ export var upgrades = {
     Intuitive: {
         name: "Intuitive",
         proficiencyCost: 0,
-        description: "The proficiency cost of this weapon is halved (rounding up). This upgrade may be taken multiple times, however, each upgrade occupies its own slot."
+        description: "The proficiency cost of this weapon is halved (rounding down)."
     },
 
     // Knockback

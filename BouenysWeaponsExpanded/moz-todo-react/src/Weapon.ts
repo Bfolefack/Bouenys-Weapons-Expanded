@@ -11,6 +11,8 @@ class Weapon {
     tier: number;
     category: WeaponType;
     attributes: Attribute[];
+    upgradeList: [string, number][];
+    description?: string;
 
     constructor(
         name: string,
@@ -33,7 +35,10 @@ class Weapon {
         this.tier = tier;
         this.category = category;
         this.attributes = attributes;
+        this.upgradeList = [];
         this.attributes.sort((a, b) => a < b ? -1 : 1);
+        if (description)
+            this.description = description;
     }
 
     toString(): string {
@@ -42,6 +47,10 @@ class Weapon {
 
     static getName(weapon: Weapon): string {
         return weapon.name;
+    }
+
+    copy(): Weapon {
+        return new Weapon(this.name, this.cost, this.formula.copy(), this.critRange, this.critPower, this.upgrade, this.tier, this.category, this.attributes.map(a => a.copy()), this.description);
     }
 }
 
@@ -128,6 +137,10 @@ class Attribute {
         else
             return this.name + " (" + this.stats.join("/") + ")";
     }
+
+    copy(): Attribute {
+        return new Attribute(this.name, this.stats.slice());
+    }
 }
 
 class DiceFormula {
@@ -156,6 +169,10 @@ class DiceFormula {
             max = 0;
             indexed++;
         }
+    }
+
+    copy(): DiceFormula {
+        return new DiceFormula(this.formula.slice(), this.types.slice());
     }
 
     roll() {

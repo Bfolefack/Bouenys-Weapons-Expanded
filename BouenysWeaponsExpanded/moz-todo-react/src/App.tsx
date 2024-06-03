@@ -161,9 +161,9 @@ function WeaponTable(props) {
 }
 
 function WeaponRow(props) {
-    const weapon = weapons[props.weapon]
+    const weapon = (typeof props.weapon) == "string" ? weapons[props.weapon] : props.weapon;
 
-    if (!props.show) {
+    if (!props.show || weapon == undefined) {
         return (<></>)
     }
 
@@ -214,6 +214,18 @@ function WeaponDetails(props) {
                 {weapon.attributes.map((attribute) => (attribute.name != "Special" ? (<><li><b>{attribute.name}: </b>{attribute.description} </li><br/></>) : (<></>)))}
                 {weapon.attributes.map((attribute) => (attribute.name == "Special" ? (<><li><b>{attribute.name}: </b>{special[weapon.name]} </li><br/></>) : (<></>)))}
             </ul>
+            {weapon.upgradeList && weapon.upgradeList.length > 0 ? 
+            <>
+            <h3>Upgrades:</h3> 
+            <ul> 
+                {weapon.upgradeList.map(
+                    ([upgrade, count]) => 
+                    <li style={{marginBottom: "0.5em"}}><b>{upgrades[upgrade].name + "+".repeat(count - 1)}:</b> {count > 1 ? upgrades[upgrade].advanceDescription ? upgrades[upgrade].advanceDescription : upgrades[upgrade].description : upgrades[upgrade].description} </li>
+                )}
+            </ul>
+            </>
+
+            : <></>}
             
         </div>
     )
@@ -459,6 +471,60 @@ function UpgradeBlock(props) {
     }
 }
 
+
+function UpgradeWeapon(weapon: Weapon, upgradeList: [string, number][]) : Weapon {
+    if(upgradeList == undefined || upgradeList.length == 0)
+        return weapon;
+    //Stat Upgrades: Balanced, Critical, Extended Stock, Intuitive, Longshot, Reliable
+    let out_weapon = weapon.copy();
+    out_weapon.upgradeList = upgradeList
+    for (let i = 0; i < upgradeList.length; i++) {
+        let upgrade = upgrades[upgradeList[i][0]]
+        switch (upgrade.name) {
+            case "Balanced":
+                out_weapon.formula.formula[0] = out_weapon.attributes.filter((attribute) => attribute.name == AttributeName.Ver)[0].stats;
+                out_weapon.attributes = out_weapon.attributes.filter((attribute) => attribute.name != AttributeName.Ver)
+                if(upgradeList[i][1] == 1){
+                    out_weapon.attributes.push(new Attribute(AttributeName.Heavy));
+                }
+                break;
+            case "Critical":
+                out_weapon.critRange -= upgradeList[i][1];
+                break;
+            case "Extended Stock":
+                for(let j = 0; j < out_weapon.attributes.length; j++){
+                    if(out_weapon.attributes[j].name == AttributeName.Rel){
+                        console.log("Extended Stock", weapons[weapon.name].attributes[j].stats[0])
+                        out_weapon.attributes[j].stats[0] = weapons[weapon.name].attributes[j].stats[0] + upgradeList[i][1] * weapons[weapon.name].attributes[j].stats[0] * 0.5;
+                        out_weapon.attributes[j].stats[0] = Math.floor(out_weapon.attributes[j].stats[0]);
+                    }
+                }
+                break;
+            case "Longshot":
+                for(let j = 0; j < out_weapon.attributes.length; j++){
+                    if(out_weapon.attributes[j].name == AttributeName.Ammo){
+                        if(out_weapon.attributes[j].stats.length == 2){
+                            out_weapon.attributes[j].stats[0] = out_weapon.attributes[j].stats[1]
+                        } else if (out_weapon.attributes[j].stats.length == 3){
+                            out_weapon.attributes[j].stats[1] = out_weapon.attributes[j].stats[2]
+                        }
+                    }
+                }
+                break;
+            case "Reliable":
+                for(let j = 0; j < out_weapon.attributes.length; j++){
+                    if(out_weapon.attributes[j].name == AttributeName.Mis){
+                        out_weapon.attributes[j].stats[0] -= upgradeList[i][1];
+                        out_weapon.attributes[j].stats[0] = Math.max(1, out_weapon.attributes[j].stats[0]);
+                    }
+                }
+                break;
+        }
+    }
+    out_weapon.attributes.sort((a: Attribute, b: Attribute) => (a.name < b.name ? -1 : 1))
+    return out_weapon;
+} 
+
 function WeaponBuilderWrapper(props) {
     let weaponList = Object.keys(weapons).map((weapon) => [weapon, true]) 
     weaponList.sort((a: (string | boolean)[], b: (string | boolean)[]) => (weapons[a[0] as string].name < weapons[b[0] as string].name ? -1 : 1))
@@ -473,6 +539,9 @@ function WeaponBuilderWrapper(props) {
         setActiveWeapon(weapon);
         setMaxUpgradeCount(weapons[weapon].upgrade);
         setActiveUpgrade("");
+        setBuilderUpgradeList([]);
+        setUpgradeCount(0);
+        setUpgradeBlocks([]);
     }
     let setActiveUpgradeCallback = (upgrade: string) => {
         setActiveUpgrade(upgrade);
@@ -484,8 +553,6 @@ function WeaponBuilderWrapper(props) {
         console.log("Builder Upgrade List", builderUpgradeList)
         setUpgradeBlocks(builderUpgradeList.map(([upgrade, count]) => <UpgradeBlock name={upgrade} count={count} callback={setActiveUpgradeCallback} />))
     }
-
-
 
     function addUpgrade() {
         for (let i = 0; i < builderUpgradeList.length; i++) {
@@ -572,25 +639,68 @@ function WeaponBuilderWrapper(props) {
     let upgradeList = Object.keys(upgrades).filter((upgrade) => UpgradeMatchesWeapon(activeWeapon, upgrade))
     upgradeList.sort((a: string, b: string) => (upgrades[a].name < upgrades[b].name ? -1 : 1))
 
+    let upgradeSum = 0;
+    for(let i = 0; i < builderUpgradeList.length; i++){
+        upgradeSum += builderUpgradeList[i][1]
+    }
+
     let show = props.tab == "Builder" ? "block" : "none"
+
+    let builtWeapon = UpgradeWeapon(weapons[activeWeapon], builderUpgradeList);
+    console.log("Built Weapon: ", builtWeapon)
+
+    let proficiencyCost = 0;
+    for(let i = 0; i < builderUpgradeList.length; i++){
+        if (builderUpgradeList[i][0] == "Critical"){
+            proficiencyCost += builderUpgradeList[i][1] * 2
+        } else if(builderUpgradeList[i][0] == "Reliable" || builderUpgradeList[i][0] == "ExtendedStock"){
+            proficiencyCost += builderUpgradeList[i][1]
+        } else {
+            if(builderUpgradeList[i][1] == 1){
+                proficiencyCost += upgrades[builderUpgradeList[i][0]].proficiencyCost
+            } else {
+                proficiencyCost += upgrades[builderUpgradeList[i][0]].advanceCost
+            }
+        }
+    }
+    // get intuitive from upgrades
+    let intuitive = false;
+    for(let i = 0; i < builderUpgradeList.length; i++){
+        if(builderUpgradeList[i][0] == "Intuitive"){
+            intuitive = true;
+        }
+    }
+    if(intuitive){
+        proficiencyCost = Math.floor(proficiencyCost / 2);
+    }
+
 
     return (
         <span style={{display: show, height: "100%"}}>
             <div className='side-div' style={{ width: "20%" }}>
                 <WeaponList list={weaponList} setWeapon={setActiveWeaponCallback} show={true} active/>
             </div>
-            <div className='side-div' style={{ width: "50%" }}>
+            <div className='side-div' style={{ width: "50%", height:"100%" }}>
                 
                 <div style={{height:"10%"}}>
                     <h1>{weapons[activeWeapon] == undefined ? "" : weapons[activeWeapon].name}</h1>
                 </div>
                 <div style={{height:"30%"}}>
-                    <WeaponDetails weapon={weapons[activeWeapon]} />
+                    <WeaponDetails weapon={builtWeapon} />
                 </div>
-                <h2>Upgrades {upgradeCount}/{maxUpgradeCount}</h2>
-                <ul className='scrolling-wrapper' style={{height:"30%"}}>
-                    {upgradeBlocks}
-                </ul>
+                <table style={{height:"5%", width: "100%"}}>
+                    <WeaponRow weapon={builtWeapon} show={true}/>
+                </table>
+                <h3 style={{height:"5%"}}>Upgrades {upgradeCount}/{maxUpgradeCount}</h3>
+                <div style={{height:"25%"}}>
+                    <ul className='scrolling-wrapper'>
+                        {upgradeBlocks}
+                    </ul>
+                </div>
+                <div style={{height:"10%", textAlign: "center"}}>
+                    <h3> Weapon Market Value: {(weapons[activeWeapon] == undefined ? 0 : (weapons[activeWeapon].cost > 10 ? weapons[activeWeapon].cost : 10)) * (upgradeSum ** 2)} GP</h3>
+                    <h3> Proficiency Cost: {"X".repeat(proficiencyCost)} </h3>
+                </div>
             </div>
             <div className='side-div' style={{ width: "30%" }}>
                 <div style={{height:"30%"}}>
@@ -801,7 +911,7 @@ function App() {
             <div className='main-body'>
                 
                     <header className='header' >
-                        <button onClick={() => setTab("Builder")} className="header-tab">Builder (WIP)</button>
+                        <button onClick={() => setTab("Builder")} className="header-tab">Builder</button>
                         <button onClick={() => setTab("Upgrades")} className="header-tab">Upgrades</button>
                         <button onClick={() => setTab("Weapons")} className="header-tab">Weapons</button>
                         <button onClick={() => setTab("Home")} className="header-tab">Home</button>
