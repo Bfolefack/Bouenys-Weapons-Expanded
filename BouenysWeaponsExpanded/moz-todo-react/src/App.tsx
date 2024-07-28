@@ -203,16 +203,19 @@ function WeaponDetails(props) {
     }
 
     let weapon : Weapon = props.weapon
+    let description = weapon.description ? weapon.description : "No description available."
+    let key = weapon.name.replace(/[^a-zA-Z]/g, '')
     return (
         <div className='scrolling-wrapper'>
             <h2>{weapon.name}</h2>
             <b>Cost:</b> {weapon.cost < 1 ? (weapon.cost * 10) + " SP" : weapon.cost + " GP"} <br />
             <b>Damage:</b> {weapon.formula.toString()} <br />
             <b>Critical:</b> {weapon.critPower == 0 ? "-" : (weapon.critRange == 20 ? "x" + weapon.critPower : weapon.critRange + "-20/x" + weapon.critPower)} <br />
+            <p style={{marginLeft: "2em"}}><em>{description}</em></p>
             <h3>Attributes:</h3>
             <ul>
                 {weapon.attributes.map((attribute) => (attribute.name != "Special" ? (<><li><b>{attribute.name}: </b>{attribute.description} </li><br/></>) : (<></>)))}
-                {weapon.attributes.map((attribute) => (attribute.name == "Special" ? (<><li><b>{attribute.name}: </b>{special[weapon.name]} </li><br/></>) : (<></>)))}
+                {weapon.attributes.map((attribute) => (attribute.name == "Special" ? (<><li><b>{attribute.name}: </b>{special[key]} </li><br/></>) : (<></>)))}
             </ul>
             {weapon.upgradeList && weapon.upgradeList.length > 0 ? 
             <>
@@ -342,7 +345,7 @@ function UpgradeDetails(props) {
                 <div className='scrolling-wrapper' style={{ height: "50%", overflow: "auto"}}>
                     <h1 style={{ margin: "0px" }}>{upgrade.name}</h1>
                     <b>
-                        Proficiency Cost: {"X".repeat(upgrade.proficiencyCost)} <br />
+                        Proficiency Cost: {upgrade.proficiencyCost} <br />
                         Attribute Prerequisites: {upgrade.attributePrereqs == undefined ? "None" : upgrade.attributePrereqs.join(", ")} <br />
                         Weapon Type Prerequisites: {upgrade.typePrereq ? upgrade.typePrereq.toString() : "None"} <br />
                         Damage Type Prerequisites: {upgrade.damagePrereqs == undefined ? "None" : upgrade.damagePrereqs.join(" or ")} <br /><br />
@@ -352,8 +355,8 @@ function UpgradeDetails(props) {
                     <div hidden={upgrade.advanceCost == undefined}>
                         <br />
                         <b>
-                            Advance Cost: {"X".repeat(upgrade.advanceCost)} <br />
-                            Advance Description:
+                            Advanced Cost: {upgrade.advanceCost} <br />
+                            Advanced Description:
                         </b>
                         <p style={{ margin: 0 }}>{upgrade.advanceDescription}</p>
                     </div>
@@ -478,6 +481,7 @@ function UpgradeWeapon(weapon: Weapon, upgradeList: [string, number][]) : Weapon
     //Stat Upgrades: Balanced, Critical, Extended Stock, Intuitive, Longshot, Reliable
     let out_weapon = weapon.copy();
     out_weapon.upgradeList = upgradeList
+    let key = weapon.name.replace(/[^a-zA-Z]/g, '')
     for (let i = 0; i < upgradeList.length; i++) {
         let upgrade = upgrades[upgradeList[i][0]]
         switch (upgrade.name) {
@@ -494,8 +498,8 @@ function UpgradeWeapon(weapon: Weapon, upgradeList: [string, number][]) : Weapon
             case "Extended Stock":
                 for(let j = 0; j < out_weapon.attributes.length; j++){
                     if(out_weapon.attributes[j].name == AttributeName.Rel){
-                        console.log("Extended Stock", weapons[weapon.name].attributes[j].stats[0])
-                        out_weapon.attributes[j].stats[0] = weapons[weapon.name].attributes[j].stats[0] + upgradeList[i][1] * weapons[weapon.name].attributes[j].stats[0] * 0.5;
+                        console.log("Extended Stock", weapons[key].attributes[j].stats[0])
+                        out_weapon.attributes[j].stats[0] = weapons[key].attributes[j].stats[0] + upgradeList[i][1] * weapons[key].attributes[j].stats[0] * 0.5;
                         out_weapon.attributes[j].stats[0] = Math.floor(out_weapon.attributes[j].stats[0]);
                     }
                 }
@@ -699,7 +703,7 @@ function WeaponBuilderWrapper(props) {
                 </div>
                 <div style={{height:"10%", textAlign: "center"}}>
                     <h3> Weapon Market Value: {(weapons[activeWeapon] == undefined ? 0 : (weapons[activeWeapon].cost > 10 ? weapons[activeWeapon].cost : 10)) * (upgradeSum ** 2)} GP</h3>
-                    <h3> Proficiency Cost: {"X".repeat(proficiencyCost)} </h3>
+                    <h3> Proficiency Cost: {proficiencyCost} </h3>
                 </div>
             </div>
             <div className='side-div' style={{ width: "30%" }}>
@@ -741,7 +745,7 @@ function HomepageWrapper(props) {
     return (
         <span className='scrolling-wrapper' style={{ display: show, height: "100%", width: "100%"}}>
             <nav className='side-div' style={{width: "20%", lineHeight: "1.6"}}>
-                {toc}
+                <div>{toc}</div>
             </nav>
             <div className='side-div' style={{ width: "60%", height: "100%", lineHeight: "1.6"}}>
                 <h1  id="home" >Welcome to Boueny's Weapons Expanded</h1>
@@ -776,21 +780,23 @@ function HomepageWrapper(props) {
                     <li style={{marginBottom: "1em"}}><b>Expert Proficiency</b> - Finally, given a character has Advanced Proficiency in a weapon category they can then gain Expert Proficiency for a  that category. This grants proficiency with a <b><em>SINGLE</em></b> <em>Red</em> weapon in that category. Expert proficiency represents an unprecedented degree of synchronicty and mastery over a single weapon, allowing the wielder to perform feats of martial prowess that would be impossible for lesser warriors. This level of proficiency is rarely found except among legendary warriors and heroes, and is the pinnacle of martial skill. A character may take multiple expert proficiencies, in a single weapon category or in multiple weapon categories. <br/> </li>
                 </ul>
                 <h3 id="classProficiencies" data-title="Class Proficiencies" data-level="1">Class Proficiencies</h3>
-                <p>&emsp;&emsp;The altered proficiency system above clashes with how D&D classically defines weapon proficiencies. Under this ruleset, martial classes (e.g. any class without spell slots) can take a new weapon proficiency alongside each ability score increase (therefore, if a feat is taken the proficiency is not gained). This means taking Basic proficiency in a new category, Advanced proficiency in a category you already have Basic proficiency for, or an Expert proficiency in a category you already have Advanced proficiency for. Other classes can gain proficiencies via the weapons training feat. Rules for starting proficiency by class, as well as clarifications for special weapon categories are provided below. These proficiencies are gained from your primary class and <em>cannot</em> be gained by multi-classing<br/> </p>
-                <ul style={{width: "80%", marginLeft: "10%"}}>
-                    <li style={{marginBottom: "0.5em"}}><b>Artificer</b> - Artificers gain proficiency with basic weapons, and gain basic proficiency in firearms.</li>
-                    <li style={{marginBottom: "0.5em"}}><b>Barbarian</b> - Barbarians gain proficiency with basic weapons, basic proficiency in any two categories, and advanced proficiency in any other two categories.</li>
-                    <li style={{marginBottom: "0.5em"}}><b>Bard</b> - Bards gain proficiency with basic weapons and may choose one basic proficiency and one advanced proficiency from Agile, Throwing, and Archery.</li>
-                    <li style={{marginBottom: "0.5em"}}><b>Cleric</b> - Clerics gain proficiency with basic weapons, and may choose two basic proficiencies from Brutal, Polearm, Cleaving, and Throwing.</li>
-                    <li style={{marginBottom: "0.5em"}}><b>Druid</b> - Druids gain proficiency with basic weapons and choose two basic proficiencies from Agile, Brutal, Polearm, Cleaving, and Throwing.</li>
-                    <li style={{marginBottom: "0.5em"}}><b>Fighter</b> - Fighters gain proficiency with basic weapons, basic proficiency in any three categories, and advanced proficiency in any other two categories.</li>
-                    <li style={{marginBottom: "0.5em"}}><b>Monk</b> - Monks gain proficiency with basic weapons and choose a basic proficiency and an advanced proficiency from Agile, Polearm, Cleaving, and Throwing. Monk weapons are any basic melee weapons that do not have the two-handed or heavy properties.</li>
-                    <li style={{marginBottom: "0.5em"}}><b>Paladin</b> - Paladins gain proficiency with basic weapons, basic proficiency in any two categories, and advanced proficiency in any other two categories.</li>
-                    <li style={{marginBottom: "0.5em"}}><b>Ranger</b> - Rangers gain proficiency with basic weapons, basic proficiency in any two categories, and advanced proficiency in any other two categories.</li>
-                    <li style={{marginBottom: "0.5em"}}><b>Rogue</b> - Rogues gain proficiency with basic weapons,  as well as two basic proficiencies and two advanced proficiencies from Agile,  Throwing, Archery, and Firearms.</li>
-                    <li style={{marginBottom: "0.5em"}}><b>Sorcerer</b> - Sorcerers gain proficiency with basic weapons and choose a basic proficiency from any category.</li>
-                    <li style={{marginBottom: "0.5em"}}><b>Warlock</b> - Warlocks gain proficiency with basic weapons and choose any two basic proficiencies from any category. Note: Pact of the blade warlocks cannot choose an expert (red) weapon as their pact weapon unless they already have proficiency with that weapon.</li>
-                    <li style={{marginBottom: "0.5em"}}><b>Wizard</b> - Wizards gain proficiency with basic weapons and choose a basic proficiency from any category.</li>
+                <p>&emsp;&emsp;The altered proficiency system above clashes with how D&D classically defines weapon proficiencies. Under this ruleset, purely martial classes (any class that never gains 5th spell slots) can take a new weapon proficiency alongside each ability score increase (if a feat is taken instead, the proficiency is not gained). This means taking Basic proficiency in a new category, Advanced proficiency in a category you already have Basic proficiency for, or an Expert proficiency in a category you already have Advanced proficiency for. Any class can also gain proficiencies via the weapons training feat described below. Finally, weapon proficiencies may be gained at any time by training under a master of a given weapon or weapon type. Rules for starting proficiency by class, as well as clarifications for special weapon categories are provided below. These proficiencies are gained from your primary class and <em>cannot</em> be gained by multi-classing<br/> </p>
+                <ul style={{width: "80%", marginLeft: "10%", fontSize: "0.9em"}}>
+                <li style={{marginBottom: "0.5em"}}><b>Artificer</b> - Gains basic proficiency in firearms.</li>
+                <li style={{marginBottom: "0.5em"}}><b>Barbarian</b> - Gains basic proficiency in any two categories, and advanced proficiency in any other two categories.</li>
+                <li style={{marginBottom: "0.5em"}}><b>Bard</b> - May choose one basic proficiency and one advanced proficiency from Agile, Throwing, or Archery.</li>
+                <li style={{marginBottom: "0.5em"}}><b>Cleric</b> - May choose two basic proficiencies from Brutal, Polearm, Cleaving, or Throwing.</li>
+                <li style={{marginBottom: "0.5em"}}><b>Druid</b> - May choose two basic proficiencies from Agile, Brutal, Polearm, Cleaving, or Throwing.</li>
+                <li style={{marginBottom: "0.5em"}}><b>Fighter</b> - Gains basic proficiency in any three categories, and advanced proficiency in any other two categories.</li>
+                <li style={{marginBottom: "0.5em"}}><b>Monk</b> - May choose one basic proficiency and one advanced proficiency from Agile, Polearm, Cleaving, or Throwing. <br/>
+                <div style={{marginLeft: "2em"}}>Note: A Monk weapon is any basic melee weapon that does not have the two-handed or heavy properties.</div></li>
+                <li style={{marginBottom: "0.5em"}}><b>Paladin</b> - Gains basic proficiency in any two categories, and advanced proficiency in any other two categories.</li>
+                <li style={{marginBottom: "0.5em"}}><b>Ranger</b> - Gains basic proficiency in any two categories, and advanced proficiency in any other two categories.</li>
+                <li style={{marginBottom: "0.5em"}}><b>Rogue</b> - May choose any two basic proficiencies, as well as two advanced proficiencies from Agile, Throwing, Archery, or Firearms.</li>
+                <li style={{marginBottom: "0.5em"}}><b>Sorcerer</b> - May choose one basic proficiency from any category.</li>
+                <li style={{marginBottom: "0.5em"}}><b>Warlock</b> - May choose any two basic proficiencies from any category. <br/>
+                <div style={{marginLeft: "2em"}}>Note: Pact of the Blade Warlocks cannot choose an expert (red) weapon as their pact weapon unless they already have proficiency with that weapon. </div> </li>
+                <li style={{marginBottom: "0.5em"}}><b>Wizard</b> - May choose one basic proficiency from any category.</li>
                 </ul>
 
                 <div className="feat">
