@@ -308,13 +308,13 @@ export var upgrades = {
 
     // Parry
     // Prereq: Agile
-    // Proficiency Cost: X
+    // Proficiency Cost: XX
     // While not wielding a shield, you may use your reaction to add your proficiency bonus to your AC against a single attack.
     Parry: {
         name: "Parry",
         typePrereq: WeaponType.Agile,
-        proficiencyCost: 1,
-        description: "While not wielding a shield, you may use your reaction to add your proficiency bonus to your AC against a single attack."
+        proficiencyCost: 2,
+        description: "While not wielding a shield, you may use a reaction, which you take when you are hit by a melee attack, to add your proficiency bonus to your AC against the triggering attack."
     },
 
     // Phalanx
