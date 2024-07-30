@@ -434,7 +434,8 @@ function UpgradeMatchesWeapon(weaponName: string, upgradeName: string) {
             }
 
             if (!weapons[weaponName].attributes.map((attribute) => (attribute.name)).includes(attribute)) {
-                return false
+                if(!(weaponName == "HookSword" && attribute == AttributeName.Reach))
+                    return false
             }
         }
     }
@@ -568,7 +569,6 @@ function WeaponBuilderWrapper(props) {
                     case "Demolish":
                     case "Disarm":
                     case "Explosive":
-                    case "Feint":
                     case "Hobble":
                     case "Intuitive":
                     case "Longshot":
@@ -592,7 +592,9 @@ function WeaponBuilderWrapper(props) {
                     case "Honed" :
                     case "Intimidating" :
                     case "Knockback" :
+                    case "Feint":
                     case "Steady" :
+                        // Singly advanceable upgrades
                         if (builderUpgradeList[i][1] == 2) {
                             return;
                         } else {
@@ -602,10 +604,12 @@ function WeaponBuilderWrapper(props) {
                         }
                     case "ExtendedStock" :
                     case "Reliable" :
+                        // Infinitely advanceable upgrades
                         builderUpgradeList[i][1]++;
                         setBuilderUpgradeListCallback(builderUpgradeList);
                         return;
                     case "Critical" :
+                        // Advanceable upgrades with special rules
                         if(upgradeCount < maxUpgradeCount){
                             builderUpgradeList[i][1]++;
                             setBuilderUpgradeListCallback(builderUpgradeList);

@@ -13,7 +13,7 @@ export var upgrades = {
         name: "Balanced",
         attributePrereqs: [AttributeName.Ver],
         proficiencyCost: 2,
-        description: "This weapon does its versatile damage whether you are wielding it one-handed or not. A weapon with the balanced upgrade is considered heavy for dual wielding purposes.",
+        description: "This weapon does its versatile damage whether you are wielding it one-handed or not. This weapon is considered heavy for dual wielding purposes.",
         advanceCost: 3,
         advanceDescription: "This weapon does its versatile damage whether you are wielding it one-handed or not."
     },
@@ -200,7 +200,9 @@ export var upgrades = {
         attributePrereqs: [AttributeName.OneVer, AttributeName.Melee],
         damagePrereqs: [DamageType.Slash, DamageType.Pier],
         proficiencyCost: 1,
-        description: "Upon a successful attack you may forgo dealing damage in exchange for giving the next attack against the creature advantage."
+        description: "Upon a successful attack you may forgo dealing damage in exchange for giving the next attack against the creature advantage.",
+        advanceCost: 2,
+        advanceDescription: "Upon a successful attack you may forgo dealing damage in exchange for giving the next attack against the creature advantage. Additionally, the next attack the creature makes before the end of its next turn has disadvantage."
     },
 
     // Focus

@@ -50,7 +50,7 @@ export var attributes = {
     Misfire : {
         name: "Misfire",
         //attribute_enum: AttributeName.Mis,
-        description: "Whenever you make an attack roll with a weapon that has the misfire property and the number shown on the die is equal to or lower than the weapon’s misfire score, the weapon misfires. The attack misses, and the weapon cannot be used again until you spend an action to repair it. To repair your weapon, make a Dexterity check with a DC of 10 + the weapon's misfire score. On a success, the weapon is repaired. On a failure, the weapon is broken and must be repaired outside of combat with its proper firearm repair kit.",
+        description: "Whenever you make an attack roll with a weapon that has the misfire property and the number shown on the die is equal to or lower than the weapon’s misfire score, the weapon misfires. The attack misses, and the weapon cannot be used again until you spend an action to repair it. To repair your weapon, make an Intelligence (Sleight of Hand) check with a DC of 10 + the weapon's misfire score. On a success, the weapon is repaired. On a failure, the weapon is broken and must be repaired outside of combat with its proper firearm repair kit.",
         short_description: "This weapon has a chance to misfire when used. If it misfires, it cannot be used again until repaired."
     },
     Powder : {

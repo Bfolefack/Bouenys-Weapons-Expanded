@@ -1,6 +1,6 @@
 export var special = {
     "PoisonersNeedle" : "This weapon is so small that, with a successful Dexterity (Sleight of Hand) check against a target's passive Perception, you may attack a target without them noticing.",
-    "HookSword" : "When wielding two hook swords, you may treat them both as if they had the reach property. This property is considered when determining prerequisites for feats, abilities, and upgrades.",
+    "HookSword" : "When wielding two hook swords, you may treat them both as if they had the reach property. This property is counted when determining prerequisites for feats, abilities, and upgrades.",
     "RapierGauche" : "When wielding a rapier and gauche together with proficiency in the pairing, upgrades applied to either weapon can be used by either.",
     "ChainGauntlets" : "Your grapple range is increased by 5 feet when wearing chain gauntlets. Additionally, any target you are grappling is considered restrained.",
     "Lance" : "You have disadvantage when attacking a target within 5 feet of you with a lance. Additionally, a lance requires two hands to wield when not mounted.",
