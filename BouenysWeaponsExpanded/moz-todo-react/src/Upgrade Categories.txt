@@ -1,0 +1,45 @@
+Upgrade Categories
+
+Basic
+Cleave
+Concealed
+Concuss
+Demolish
+Disarm
+Explosive
+Feint
+Hobble
+Intuitive
+Longshot
+Parry
+Phalanx
+Point Blank
+Quickdraw
+Riposte
+Silenced
+Trip
+Vigilant
+
+Basic + Advance
+Balanced
+Bleed
+Brawler
+Charge
+Deadeye
+Execute
+Focus
+Honed
+Intimidating
+Knockback
+Steady
+
+
+
+
+Basic + Unlimited Advance
+Extended Stock
+Reliable
+
+
+Multi-Slot Basic
+Critical

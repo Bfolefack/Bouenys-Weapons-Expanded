@@ -56,13 +56,13 @@ class Weapon {
 
 
 enum WeaponType {
-    Basic = "Basic",
+    General = "General",
     Agile = "Agile",
     Polearm = "Polearm",
     Cleaving = "Cleaving",
     Brutal = "Brutal",
     Thrown = "Thrown",
-    Archery = "Archery",
+    Elastic = "Elastic",
     Firearm = "Firearm"
 }
 

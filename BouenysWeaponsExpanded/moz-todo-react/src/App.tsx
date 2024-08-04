@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { weapons } from './WeaponList'
 import { upgrades } from './UpgradeList'
+import { attributes } from './AttributeList'
 import React from 'react'
 import { Weapon } from './Weapon'
 import { Attribute } from './Weapon'
@@ -31,13 +32,13 @@ function WeaponTableWrapper(props) {
         <div style={{display: show, height: "100%"}}>
             <span className='weapon-tab-container' style={{ height: "10%", position: "sticky" }}>
                 <button onClick={() => setWeaponCategory("All")} className="weapon-tab">All</button>
-                <button onClick={() => setWeaponCategory("Basic")} className="weapon-tab">Basic</button>
+                <button onClick={() => setWeaponCategory("General")} className="weapon-tab">General</button>
                 <button onClick={() => setWeaponCategory("Agile")} className="weapon-tab">Agile</button>
                 <button onClick={() => setWeaponCategory("Polearm")} className="weapon-tab">Polearm</button>
                 <button onClick={() => setWeaponCategory("Cleaving")} className="weapon-tab">Cleaving</button>
                 <button onClick={() => setWeaponCategory("Brutal")} className="weapon-tab">Brutal</button>
                 <button onClick={() => setWeaponCategory("Thrown")} className="weapon-tab">Thrown</button>
-                <button onClick={() => setWeaponCategory("Archery")} className="weapon-tab">Archery</button>
+                <button onClick={() => setWeaponCategory("Elastic")} className="weapon-tab">Elastic</button>
                 <button onClick={() => setWeaponCategory("Firearm")} className="weapon-tab">Firearm</button>
             </span>
 
@@ -202,16 +203,49 @@ function WeaponDetails(props) {
         return (<></>)
     }
 
+    let weaponTypeToString = (type: WeaponType) => {
+        switch (type) {
+            case WeaponType.General:
+                return "General Weapon"
+            case WeaponType.Agile:
+                return "Agile Weapon"
+            case WeaponType.Polearm:
+                return "Polearm"
+            case WeaponType.Cleaving:
+                return "Cleaving Weapon"
+            case WeaponType.Brutal:
+                return "Brutal Weapon"
+            case WeaponType.Thrown:
+                return "Thrown Weapon"
+            case WeaponType.Elastic:
+                return "Elastic Weapon"
+            case WeaponType.Firearm:
+                return "Firearm"
+        }
+    }
+
+    let weaponTierToString = (tier: number) => {
+        switch (tier) {
+            case 0:
+                return "Basic"
+            case 1:
+                return "Advanced"
+            case 2:
+                return "Expert"
+        }
+    }
+
     let weapon : Weapon = props.weapon
     let description = weapon.description ? weapon.description : "No description available."
     let key = weapon.name.replace(/[^a-zA-Z]/g, '')
     return (
         <div className='scrolling-wrapper'>
-            <h2>{weapon.name}</h2>
+            <h2 style={{paddingBottom: 0, marginBottom: 0}}>{weapon.name}</h2>
+            <em>{weaponTierToString(weapon.tier)} {weaponTypeToString(weapon.category)}</em> <br />
+            <p style={{marginLeft: "2em"}}><em>{description}</em></p>
             <b>Cost:</b> {weapon.cost < 1 ? (weapon.cost * 10) + " SP" : weapon.cost + " GP"} <br />
             <b>Damage:</b> {weapon.formula.toString()} <br />
             <b>Critical:</b> {weapon.critPower == 0 ? "-" : (weapon.critRange == 20 ? "x" + weapon.critPower : weapon.critRange + "-20/x" + weapon.critPower)} <br />
-            <p style={{marginLeft: "2em"}}><em>{description}</em></p>
             <h3>Attributes:</h3>
             <ul>
                 {weapon.attributes.map((attribute) => (attribute.name != "Special" ? (<><li><b>{attribute.name}: </b>{attribute.description} </li><br/></>) : (<></>)))}
@@ -560,6 +594,10 @@ function WeaponBuilderWrapper(props) {
     }
 
     function addUpgrade() {
+        if (activeUpgrade == "") {
+            return;
+        }
+
         for (let i = 0; i < builderUpgradeList.length; i++) {
             if (builderUpgradeList[i][0] == activeUpgrade) {
                 switch (activeUpgrade) {
@@ -682,6 +720,10 @@ function WeaponBuilderWrapper(props) {
         proficiencyCost = Math.floor(proficiencyCost / 2);
     }
 
+    let weaponCost = 0;
+    if(weapons[activeWeapon] != undefined){
+        weaponCost = (weapons[activeWeapon].cost + (weapons[activeWeapon].cost > 10 ? weapons[activeWeapon].cost : 10)) * (upgradeSum ** 2)
+    }
 
     return (
         <span style={{display: show, height: "100%"}}>
@@ -706,7 +748,7 @@ function WeaponBuilderWrapper(props) {
                     </ul>
                 </div>
                 <div style={{height:"10%", textAlign: "center"}}>
-                    <h3> Weapon Market Value: {(weapons[activeWeapon] == undefined ? 0 : (weapons[activeWeapon].cost > 10 ? weapons[activeWeapon].cost : 10)) * (upgradeSum ** 2)} GP</h3>
+                    <h3> Weapon Market Value: {weaponCost} GP</h3>
                     <h3> Proficiency Cost: {proficiencyCost} </h3>
                 </div>
             </div>
@@ -758,17 +800,18 @@ function HomepageWrapper(props) {
                 </p>
                 <h2 id="weaponsCategories" data-title="Weapon Categories"  data-level="0">Weapons Categories</h2>
                 <p>&emsp;&emsp;
-                    Weapons and weapon proficiencies work a little differently in Boueny's Weapons Expanded. Rather than being split into the classic four categories of Simple Melee, Simple Ranged, Martial Melee, and Martial Ranged, weapons are split into eight categories based on their properties and design. These categories are as follows:
+                    Weapons and weapon proficiencies work a little differently in Boueny's Weapons Expanded. Rather than being split into the classic four classifiers Simple, Martial, Melee, and Ranged, the weapons in this module are divided into eight categories based on their properties and design. These categories are as follows:
                 </p>
                 <ul style={{width: "80%", marginLeft: "10%"}}>
-                    <li style={{margin: "0.5em"}}><b>Basic</b> - Simple weapons that require no or very little special training to use effectively</li>
-                    <li style={{margin: "0.5em"}}><b>Agile</b> - Lightweight weapons that rely on dexterity and finesse to kill with deadly efficiency</li>
-                    <li style={{margin: "0.5em"}}><b>Polearm</b> - Long armed weapons with a far reach that are extremely dangerous when paired with careful positioning and planning</li>
-                    <li style={{margin: "0.5em"}}><b>Cleaving</b> - Heavy weapons made to cut through flesh and leave severe bleeding wounds</li>
-                    <li style={{margin: "0.5em"}}><b>Brutal</b> - Weapons made to bludgeon, bruise, and crush bone, leaving enemies incapacitated, but alive.</li>
-                    <li style={{margin: "0.5em"}}><b>Throwing</b> - Weapons launched via muscle alone without the assistance of tension or explosives. </li>
-                    <li style={{margin: "0.5em"}}><b>Archery</b> - Weapons made from stiff materials with taut string to launch piercing ammunition. </li>
-                    <li style={{margin: "0.5em"}}><b>Firearms</b> - Metallic weapons made to launch specialized ammunition with explosive force, to devastating effect.</li>
+                    <li style={{margin: "0.5em"}}>&emsp;&emsp;<b>Basic</b> - Simple weapons that require no or very little special, Basic weapons are straightforward in design and function, making them accessible to nearly anyone. They tend to be simple, cheap, and easy to use, and as such, are the most common weapons in the world, and can be found in the hands of most commoners and soldiers. </li>
+                    <li style={{margin: "0.5em"}}>&emsp;&emsp;<b>Agile</b> - Lightweight weapons that rely on dexterity and finesse to kill, Agile weapons are fast, precise, and deadly in the hands of a skilled user. These weapons are designed for quick strikes and fluid movements, allowing the wielder to outmaneuver opponents and exploit weaknesses with speed and accuracy. Whether used in close combat by a skilled duelist or from the shadows by a stealthy assassin, Agile weapons are the choice of those who value speed and precision over raw power.</li>
+                    <li style={{margin: "0.5em"}}>&emsp;&emsp;<b>Polearm</b> - Long armed weapons with a far reach, Polearms are extremely dangerous when paired with careful positioning and planning. Weapons that excel in formations and defensive stances, they're ideal for both individual combat and large-scale battles. Their extended reach provides a tactical advantage, enabling the user to strike from a distance and control the battlefield. Mastery of Polearms requires strategic thinking and precise coordination, transforming these versatile weapons into formidable tools of warfare.</li>
+                    <li style={{margin: "0.5em"}}>&emsp;&emsp;<b>Cleaving</b> - Heavy weapons made to cut through flesh and leave severe bleeding wounds, Cleaving Weapons are formidable tools of destruction. With the weight and sharp edges to enable the wielder to deliver devastating strikes that can cleave through armor and bone alike, Cleaving Weapons are favored by warriors who rely on strength and overwhelming force to dominate their foes. Each swing carries the potential to inflict grievous injuries, making these weapons particularly effective in close-quarters combat. </li>
+                    <li style={{margin: "0.5em"}}>&emsp;&emsp;<b>Brutal</b> - Weapons made to bludgeon, bruise, and crush bone, Brutal Weapons are known for leaving enemies incapacitated, but alive. Their design emphasizes weight and momentum, allowing the wielder to smash through defenses and disable opponents effectively. Brutal Weapons are ideal for combatants who seek to subdue or incapacitate their foes without necessarily killing them. The raw power and crushing blows of these weapons can overwhelm even the toughest adversaries, making them a favored choice for those who rely on sheer physical dominance in battle. </li>
+                    <li style={{margin: "0.5em"}}>&emsp;&emsp;<b>Throwing</b> - Weapons launched via muscle alone without the assistance of tension or explosives, Throwing Weapons rely on the skill and strength of the user for effectiveness. Lightweight and balanced, throwing weapons can be used to strike at range, allowing the wielder to engage foes from a distance and maintain the upper hand in combat. Mastery of Throwing Weapons requires keen aim and control, turning these seemingly simple tools into deadly projectiles in the hands of a skilled user. </li>
+                    <li style={{margin: "0.5em"}}>&emsp;&emsp;<b>Elastic</b> - Weapons made from stiff materials and taut string to launch piercing ammunition, Elastic Weapons are known for their accuracy at range and penetrative power. The combination of flexible materials and precise engineering allows Elastic Weapons to strike targets at considerable distances with remarkable precision. Favored by hunters, archers, and ranged combatants, these weapons excel in both hunting and warfare, offering a silent and deadly means of engaging enemies from afar. Mastery of Elastic Weapons involves understanding the mechanics of tension and release, as well as developing the skill to aim and shoot with consistent accuracy. </li>
+                    <li style={{margin: "0.5em"}}>&emsp;&emsp;<b>Firearms</b> - Metallic weapons made to launch specialized ammunition with explosive force, Firearms tear through enemies to devastating effect. The combination of advanced metallurgy and chemical propellants enables Firearms to deliver powerful and precise shots that cause catastrophic damage. Despite their formidable capabilities, Firearms are still very expensive and experimental weapons that are prone to failure. The high cost of production and maintenance, coupled with the complexity of their mechanisms, makes them exceptionally rare. Users must contend with the risk of misfires and the need for specialized ammunition. Nevertheless, in the hands of a skilled marksman, Firearms can dominate the battlefield, bringing a new era of ranged combat with unmatched lethality and precision. <br/> 
+                    <em><b>Note:</b> Some DMs may choose to exclude Firearms from their campaigns due to the way they clash with some settings. </em> </li>
                 </ul>
                 <p>&emsp;&emsp;
                     Each weapon category has its own unique properties and playstyle, and can be used to create a wide variety of characters and builds.
@@ -784,11 +827,11 @@ function HomepageWrapper(props) {
                     <li style={{marginBottom: "1em"}}><b>Expert Proficiency</b> - Finally, given a character has Advanced Proficiency in a weapon category they can then gain Expert Proficiency for a  that category. This grants proficiency with a <b><em>SINGLE</em></b> <em>Red</em> weapon in that category. Expert proficiency represents an unprecedented degree of synchronicty and mastery over a single weapon, allowing the wielder to perform feats of martial prowess that would be impossible for lesser warriors. This level of proficiency is rarely found except among legendary warriors and heroes, and is the pinnacle of martial skill. A character may take multiple expert proficiencies, in a single weapon category or in multiple weapon categories. <br/> </li>
                 </ul>
                 <h3 id="classProficiencies" data-title="Class Proficiencies" data-level="1">Class Proficiencies</h3>
-                <p>&emsp;&emsp;The altered proficiency system above clashes with how D&D classically defines weapon proficiencies. Under this ruleset, purely martial classes (any class that never gains 5th spell slots) can take a new weapon proficiency alongside each ability score increase (if a feat is taken instead, the proficiency is not gained). This means taking Basic proficiency in a new category, Advanced proficiency in a category you already have Basic proficiency for, or an Expert proficiency in a category you already have Advanced proficiency for. Any class can also gain proficiencies via the weapons training feat described below. Finally, weapon proficiencies may be gained at any time by training under a master of a given weapon or weapon type. Rules for starting proficiency by class, as well as clarifications for special weapon categories are provided below. These proficiencies are gained from your primary class and <em>cannot</em> be gained by multi-classing<br/> </p>
+                <p>&emsp;&emsp;The altered proficiency system above clashes with how D&D classically defines weapon proficiencies. Under this ruleset, martial classes (defined as any class/subclass that never gains 5th spell slots) can take a new weapon proficiency alongside each ability score increase (if a feat is taken instead, the proficiency is not gained). This means taking Basic proficiency in a new category, Advanced proficiency in a category you already have Basic proficiency for, or an Expert proficiency in a category you already have Advanced proficiency for. Any class can also gain proficiencies via the weapons training feat described below. Finally, weapon proficiencies may be gained at any time by training under a master of a given weapon or weapon type. Rules for starting proficiency by class, as well as clarifications for special weapon categories are provided below. Each class gains a number of Basic and/or Advanced proficiencies to start. Any adventurer automatically has General Weapons Proficiency. These proficiencies are gained from your primary class and <em>cannot</em> be gained by multi-classing<br/> </p>
                 <ul style={{width: "80%", marginLeft: "10%", fontSize: "0.9em"}}>
-                <li style={{marginBottom: "0.5em"}}><b>Artificer</b> - Gains basic proficiency in firearms.</li>
+                <li style={{marginBottom: "0.5em"}}><b>Artificer</b> - May choose one basic proficiency from Firearms and Elastic.</li>
                 <li style={{marginBottom: "0.5em"}}><b>Barbarian</b> - Gains basic proficiency in any two categories, and advanced proficiency in any other two categories.</li>
-                <li style={{marginBottom: "0.5em"}}><b>Bard</b> - May choose one basic proficiency and one advanced proficiency from Agile, Throwing, or Archery.</li>
+                <li style={{marginBottom: "0.5em"}}><b>Bard</b> - May choose one basic proficiency and one advanced proficiency from Agile, Throwing, or Elastic.</li>
                 <li style={{marginBottom: "0.5em"}}><b>Cleric</b> - May choose two basic proficiencies from Brutal, Polearm, Cleaving, or Throwing.</li>
                 <li style={{marginBottom: "0.5em"}}><b>Druid</b> - May choose two basic proficiencies from Agile, Brutal, Polearm, Cleaving, or Throwing.</li>
                 <li style={{marginBottom: "0.5em"}}><b>Fighter</b> - Gains basic proficiency in any three categories, and advanced proficiency in any other two categories.</li>
@@ -796,7 +839,7 @@ function HomepageWrapper(props) {
                 <div style={{marginLeft: "2em"}}>Note: A Monk weapon is any basic melee weapon that does not have the two-handed or heavy properties.</div></li>
                 <li style={{marginBottom: "0.5em"}}><b>Paladin</b> - Gains basic proficiency in any two categories, and advanced proficiency in any other two categories.</li>
                 <li style={{marginBottom: "0.5em"}}><b>Ranger</b> - Gains basic proficiency in any two categories, and advanced proficiency in any other two categories.</li>
-                <li style={{marginBottom: "0.5em"}}><b>Rogue</b> - May choose any two basic proficiencies, as well as two advanced proficiencies from Agile, Throwing, Archery, or Firearms.</li>
+                <li style={{marginBottom: "0.5em"}}><b>Rogue</b> - May choose any two basic proficiencies, as well as two advanced proficiencies from Agile, Throwing, Elastic, or Firearms.</li>
                 <li style={{marginBottom: "0.5em"}}><b>Sorcerer</b> - May choose one basic proficiency from any category.</li>
                 <li style={{marginBottom: "0.5em"}}><b>Warlock</b> - May choose any two basic proficiencies from any category. <br/>
                 <div style={{marginLeft: "2em"}}>Note: Pact of the Blade Warlocks cannot choose an expert (red) weapon as their pact weapon unless they already have proficiency with that weapon. </div> </li>
@@ -813,10 +856,11 @@ function HomepageWrapper(props) {
 
                 <h2 id="upgrades" data-title="Upgrades" data-level="0">Upgrades</h2>
                 <p>&emsp;&emsp;
-                    Those who are especially skilled in the arts of martial combat often find themselves limited, not by their own skill, but by the weapons they wield. To remedy this, many warriors seek out master craftsmen to imbue their weapons with powerful upgrades, granting them new abilities and enhancing their existing ones. These upgrades are powerful, unique, and can greatly enhance a weapon's capabilities, making them a valuable asset to any warrior. <br/>
+                    Those who are especially skilled in the arts of martial combat often find themselves limited, not by their own skill, but by the weapons they wield. To remedy this, many warriors seek out master craftsmen to imbue their weapons with powerful upgrades, granting them new abilities and enhancing their existing ones. These upgrades are powerful, unique, and can greatly enhance a weapon's capabilities, making them a valuable asset to any adventurer. <br/>
+                    <em>&emsp;&emsp;<b>Note:</b> Some upgrades require a saving throw to resist their effects. The DC for these saving throws is equal to 8 + your bonus to hit with the weapon.</em>
                 </p>
                 <h3 id="upgradeRequirements" data-title="Upgrade Requirements" data-level="1">Upgrade Requirements</h3>
-                <p>&emsp;&emsp; Different upgrades have different requirements that must be met before they can even be applied to a weapon. Many upgrades have restrictions on the categories and attributes of the weapon they can be applied to, while others are less restrictive. Beyond that, upgrading weapons is far from free, and even once the upgrade is applied, it requires a certain degree of proficiency to use effectively. <br/></p>
+                <p>&emsp;&emsp; Different upgrades have different requirements that must be met before they can even be applied to a weapon. Most upgrades can only be applied to weapons of a certain category, that deal a certain type of damage, or that have certain attributes. Furthermore, any given weapon can only have so many upgrades applied to it as denoted by the weapon's upgrade value. This value denotes how many upgrades a given weapon can typically have applied to it, though specially crafted or enchanted weapons may also come with additional upgrade slots. Upgrading weapons is far from free, and even once an upgrade is applied to a weapon you must meet the combined proficiency cost of all upgrades on a weapon to benefit from any of them. <br/></p>
                 <h3 id="proficiencyCost" data-title="Proficiency Cost" data-level="1">Proficiency Cost</h3>
                 <p>&emsp;&emsp; Upgrades have a proficiency cost that must met in order to use the upgrade effectively. This proficiency cost is represented by a number of X's in the upgrades description. A weapons proficiency cost is equal to the sum of the proficiency costs of all upgrades applied to it. In order to benefit from any of  a weapon's upgrades, a character must have proficiency with that weapon, and must have a proficiency bonus greater than or equal to the weapon's proficiency cost. <br/></p>
                 <h3 id="upgradePricing" data-title="Upgrade Pricing" data-level="1">Upgrade Pricing</h3>
@@ -824,9 +868,7 @@ function HomepageWrapper(props) {
                 Upgrades are not priced based on the upgrades themselves, but rather how they affect the value of the weapon they are applied to. Therefore, the market price for an upgrade is typically the value of the weapon after the upgrade is applied, minus the value of the weapon before the upgrade is applied. <br/> </p>
                 &emsp;&emsp;The market value of a weapon is determined by: <br/>
                 &emsp;&emsp;&emsp;&emsp; - The base cost of the weapon × the square of the number of upgrades applied to it. <br/>
-                <p>
-                    &emsp;&emsp;For example, a weapon with a base cost of 10 GP that has 2 upgrades applied to it would have a market value of 10 GP × 2^2 = 40 GP. This only represents the market value of the weapon, and the actual price of the weapon may be higher or lower depending on other circumstances. For example, applying upgrades to especially cheap weapons, most shopkeeps will charge as if the weapon's base cost was 10 GP, regardless of the actual base cost of the weapon, and for especially expensive weapons part of the cost may not represent actual gold spent, but rather specialty materials or tools that must be acquired before a craftsman can even attempt the upgrade. <br/>
-                </p>
+                <p>&emsp;&emsp;For example, a weapon with a base cost of 10 GP that has 2 upgrades applied to it would have a market value of 10 GP × 2^2 = 40 GP. This only represents the market value of the weapon, and the actual price of the weapon may be higher or lower depending on other circumstances. For example, applying upgrades to especially cheap weapons, most shopkeeps will charge as if the weapon's base cost was 10 GP, regardless of the actual base cost of the weapon, and for especially expensive weapons part of the cost may not represent actual gold spent, but rather specialty materials or tools that must be acquired before a craftsman can even attempt the upgrade. <br/></p>
                 <h3 id="applyingUpgrades" data-title="Applying Upgrades" data-level="1">Applying Upgrades</h3>
                 <p>&emsp;&emsp; Applying upgrades to a weapon is a difficult and time-consuming process. It typically requires a skilled craftsman, a well-equipped workshop, and a significant amount of time. Most upgrades take at least a week to apply, and some may take even longer. Your DM will determine the exact time and cost of applying an upgrade, as well as if the process requires any special materials or tools. <br/>
                 &emsp;&emsp;Most adventurers will not have the skill or equipment required to apply upgrades themselves, and will need to seek out a skilled craftsman to do the work for them. Trivial upgrades can be applied by any skilled craftsman, while more complex upgrades may require someone with more specialized knowledge. When hiring a craftsman to apply an upgrade, the cost of their labor is included in the price of the upgrade, however they may grant discounts or charge premiums based on the circumstances. For example, if a kingdom is at war, the cost of applying upgrades may be higher, while if a craftsman is a friend of the party, they may offer a discount. The more skilled a craftsman is, the faster they can apply upgrades, and the more likely they are to charge a premium. <br/>
@@ -916,6 +958,11 @@ function App() {
         initialize()
     })
 
+    //Print the length of the weapons object
+    console.log(Object.keys(weapons).length)
+    console.log(Object.keys(upgrades).length)
+    console.log(Object.keys(attributes).length)
+    
     return (
         <>
             <div className='main-body'>

@@ -291,18 +291,18 @@ export var upgrades = {
         attributePrereqs: [AttributeName.Melee],
         damagePrereqs: [DamageType.Blud],
         proficiencyCost: 1,
-        description: "When you hit a creature with this weapon, you may use your bonus action to attempt to shove the target. The target must make a strength saving throw with a DC of your Attack Roll or be pushed up to 10 feet away from you in any direction.",
+        description: "When you hit a creature with this weapon, you may use your bonus action to attempt to shove the target. The target must make a strength saving throw or be pushed up to 10 feet away from you in any direction.",
         advanceCost: 2,
-        advanceDescription: "When you hit a creature with this weapon, you may use your bonus action to attempt to shove the target. The target must make a strength saving throw with a DC of your Attack Roll or be pushed up to 20 feet away from you in any direction, and knocked prone."
+        advanceDescription: "When you hit a creature with this weapon, you may use your bonus action to attempt to shove the target. The target must make a strength saving throw or be pushed up to 20 feet away from you in any direction, and knocked prone."
     },
 
     // Longshot
-    // Prereq: Archery
+    // Prereq: Elastic
     // Proficiency Cost: XX
     // Ignore disadvantage due to long range when wielding this weapon
     Longshot: {
         name: "Longshot",
-        typePrereq: WeaponType.Archery,
+        typePrereq: WeaponType.Elastic,
         proficiencyCost: 2,
         description: "Ignore disadvantage due to long range when wielding this weapon"
     },
