@@ -427,4 +427,13 @@ export var upgrades = {
         proficiencyCost: 2,
         description: "Your opportunity attacks with this weapon have advantage."
     },
+
+    Portable: {
+        name: "Portable",
+        attributePrereqs: [AttributeName.Stat],
+        proficiencyCost: 1,
+        description: "This weapon can be moved while attacking with it, and no longer needs to be mounted to be fired. Your movement speed is halved while wielding this weapon.",
+        advanceCost: 2,
+        advanceDescription: "This weapon can be moved while attacking with it, and no longer needs to be mounted to be fired. Your movement speed is reduced by 5 feet while wielding this weapon."
+    },
 }

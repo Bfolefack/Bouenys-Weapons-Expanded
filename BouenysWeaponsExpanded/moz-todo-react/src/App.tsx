@@ -241,7 +241,7 @@ function WeaponDetails(props) {
     return (
         <div className='scrolling-wrapper'>
             <h2 style={{paddingBottom: 0, marginBottom: 0}}>{weapon.name}</h2>
-            <em>{weaponTierToString(weapon.tier)} {weaponTypeToString(weapon.category)}</em> <br />
+            <em>{weaponTypeToString(weapon.category) == "General Weapon" ? "" : weaponTierToString(weapon.tier)} {weaponTypeToString(weapon.category)}</em> <br />
             <p style={{marginLeft: "2em"}}><em>{description}</em></p>
             <b>Cost:</b> {weapon.cost < 1 ? (weapon.cost * 10) + " SP" : weapon.cost + " GP"} <br />
             <b>Damage:</b> {weapon.formula.toString()} <br />
@@ -722,8 +722,10 @@ function WeaponBuilderWrapper(props) {
 
     let weaponCost = 0;
     if(weapons[activeWeapon] != undefined){
-        weaponCost = (weapons[activeWeapon].cost + (weapons[activeWeapon].cost > 10 ? weapons[activeWeapon].cost : 10)) * (upgradeSum ** 2)
+        weaponCost = weapons[activeWeapon].cost + ((weapons[activeWeapon].cost > 10 ? weapons[activeWeapon].cost : 10)) * (upgradeSum ** 2)
     }
+    console.log(weapons[activeWeapon])
+    console.log(weaponCost)
 
     return (
         <span style={{display: show, height: "100%"}}>
@@ -824,7 +826,7 @@ function HomepageWrapper(props) {
                     <li style={{marginBottom: "1em"}}><b>General Weapons Proficiency</b> - Grants proficiency with all weapons in the <em>Basic</em> category. All adventurers start with this proficiency, though most commoners will lack even this basic training. <br/> </li>
                     <li style={{marginBottom: "1em"}}><b>Basic Proficiency</b> - Given a character has General Weapons Proficiency they can then gain Basic Proficiency in a weapon category. This grants proficiency with all <em>Green</em> weapons in that category. Basic proficiency represents a basic understanding of a weapon type and the ability to use it effectively in combat. This level of proficiency is expected among even low-level soldiers and bandits. <br/> </li>
                     <li style={{marginBottom: "1em"}}><b>Advanced Proficiency</b> - Given a character has Basic Proficiency in a weapon category they can then gain Advanced Proficiency in that category. This grants proficiency with all <em>Yellow</em> weapons in that category. Advanced proficiency represents a deep understanding of a weapon type and the ability to use it to its full potential. This level of proficiency is expected among elite soldiers and experienced adventurers. <br/></li>
-                    <li style={{marginBottom: "1em"}}><b>Expert Proficiency</b> - Finally, given a character has Advanced Proficiency in a weapon category they can then gain Expert Proficiency for a  that category. This grants proficiency with a <b><em>SINGLE</em></b> <em>Red</em> weapon in that category. Expert proficiency represents an unprecedented degree of synchronicty and mastery over a single weapon, allowing the wielder to perform feats of martial prowess that would be impossible for lesser warriors. This level of proficiency is rarely found except among legendary warriors and heroes, and is the pinnacle of martial skill. A character may take multiple expert proficiencies, in a single weapon category or in multiple weapon categories. <br/> </li>
+                    <li style={{marginBottom: "1em"}}><b>Expert Proficiency</b> - Finally, given a character has Advanced Proficiency in a weapon category they can then gain Expert Proficiency for a  that category. This grants proficiency with a <b><em>SINGLE</em></b> <em>Red</em> weapon in that category. Expert proficiency represents an unprecedented degree of synchronicty and mastery over a single weapon, allowing the wielder to perform feats of martial prowess that would be impossible for lesser warriors. This level of proficiency is rarely found except among the most elite combatants, and is the pinnacle of martial skill. A character may take multiple expert proficiencies in a single weapon category, or in multiple weapon categories. <br/> </li>
                 </ul>
                 <h3 id="classProficiencies" data-title="Class Proficiencies" data-level="1">Class Proficiencies</h3>
                 <p>&emsp;&emsp;The altered proficiency system above clashes with how D&D classically defines weapon proficiencies. Under this ruleset, martial classes (defined as any class/subclass that never gains 5th spell slots) can take a new weapon proficiency alongside each ability score increase (if a feat is taken instead, the proficiency is not gained). This means taking Basic proficiency in a new category, Advanced proficiency in a category you already have Basic proficiency for, or an Expert proficiency in a category you already have Advanced proficiency for. Any class can also gain proficiencies via the weapons training feat described below. Finally, weapon proficiencies may be gained at any time by training under a master of a given weapon or weapon type. Rules for starting proficiency by class, as well as clarifications for special weapon categories are provided below. Each class gains a number of Basic and/or Advanced proficiencies to start. Any adventurer automatically has General Weapons Proficiency. These proficiencies are gained from your primary class and <em>cannot</em> be gained by multi-classing<br/> </p>
@@ -862,13 +864,15 @@ function HomepageWrapper(props) {
                 <h3 id="upgradeRequirements" data-title="Upgrade Requirements" data-level="1">Upgrade Requirements</h3>
                 <p>&emsp;&emsp; Different upgrades have different requirements that must be met before they can even be applied to a weapon. Most upgrades can only be applied to weapons of a certain category, that deal a certain type of damage, or that have certain attributes. Furthermore, any given weapon can only have so many upgrades applied to it as denoted by the weapon's upgrade value. This value denotes how many upgrades a given weapon can typically have applied to it, though specially crafted or enchanted weapons may also come with additional upgrade slots. Upgrading weapons is far from free, and even once an upgrade is applied to a weapon you must meet the combined proficiency cost of all upgrades on a weapon to benefit from any of them. <br/></p>
                 <h3 id="proficiencyCost" data-title="Proficiency Cost" data-level="1">Proficiency Cost</h3>
-                <p>&emsp;&emsp; Upgrades have a proficiency cost that must met in order to use the upgrade effectively. This proficiency cost is represented by a number of X's in the upgrades description. A weapons proficiency cost is equal to the sum of the proficiency costs of all upgrades applied to it. In order to benefit from any of  a weapon's upgrades, a character must have proficiency with that weapon, and must have a proficiency bonus greater than or equal to the weapon's proficiency cost. <br/></p>
+                <p>&emsp;&emsp; Upgrades have a proficiency cost that must met in order to use the upgrade effectively. A weapon's proficiency cost is equal to the sum of the proficiency costs of all upgrades applied to it. In order to benefit from any of a weapon's upgrades, a character must have proficiency with that weapon, and must have a proficiency bonus greater than or equal to the weapon's proficiency cost. <br/></p>
                 <h3 id="upgradePricing" data-title="Upgrade Pricing" data-level="1">Upgrade Pricing</h3>
                 <p>&emsp;&emsp; Upgrades are not cheap. There is a reason that most weapons are not upgraded, and those with multiple upgrades are even rarer. The skill and materials required to apply an upgrade to a weapon are expensive, and the process is extremely difficult, such that only the most skilled craftsmen can even attempt it. <br/>
                 Upgrades are not priced based on the upgrades themselves, but rather how they affect the value of the weapon they are applied to. Therefore, the market price for an upgrade is typically the value of the weapon after the upgrade is applied, minus the value of the weapon before the upgrade is applied. <br/> </p>
                 &emsp;&emsp;The market value of a weapon is determined by: <br/>
                 &emsp;&emsp;&emsp;&emsp; - The base cost of the weapon × the square of the number of upgrades applied to it. <br/>
-                <p>&emsp;&emsp;For example, a weapon with a base cost of 10 GP that has 2 upgrades applied to it would have a market value of 10 GP × 2^2 = 40 GP. This only represents the market value of the weapon, and the actual price of the weapon may be higher or lower depending on other circumstances. For example, applying upgrades to especially cheap weapons, most shopkeeps will charge as if the weapon's base cost was 10 GP, regardless of the actual base cost of the weapon, and for especially expensive weapons part of the cost may not represent actual gold spent, but rather specialty materials or tools that must be acquired before a craftsman can even attempt the upgrade. <br/></p>
+                <p>&emsp;&emsp;For example, a weapon with a base cost of 10 GP that has 2 upgrades applied to it would have a market value of 10 GP × 2^2 = 40 GP. This only represents the market value of the weapon, and the actual price of the weapon may be higher or lower depending on other circumstances. For example, applying upgrades to especially cheap weapons, most shopkeeps will charge as if the weapon's base cost was 10 GP, regardless of the actual base cost of the weapon.
+                <em><b>Note:</b> The base cost of a magic weapon will often far exceed its mundane counterpart, and as such the market value of a magical weapon after upgradeswill also be far greater. Refer to page 135 of the Dungeon Master's Guide for more information on pricing magic items. Furthermore, magic weapons may interact with upgrades in strange and interesting ways. Be creative!</em> <br/>
+                &emsp;&emsp; In general, if the market value of a weapon exceeds 10,000 GP, the weapon will be considered legendary among craftsmen regardless of any actual magical properties. When a weapon reaches this level of notoriety, it will be highly sought after by collectors and adventurers alike, and may even be the subject of bardsongs and stories. Finding a craftsman both capable of and willing to apply upgrades to such a weapon will be a difficult task, and even once they are found, the market price of applying the upgrade represents more than just the labor involved, and will often include rare materials the craftsman must acquire, as well as the risk they are taking in working on such a valuable weapon. At this level, pricing for upgrades becomes very unpredictable, and acquiring the materials and labor required to apply an upgrade may become an adventure in and of itself. <br/> </p>
                 <h3 id="applyingUpgrades" data-title="Applying Upgrades" data-level="1">Applying Upgrades</h3>
                 <p>&emsp;&emsp; Applying upgrades to a weapon is a difficult and time-consuming process. It typically requires a skilled craftsman, a well-equipped workshop, and a significant amount of time. Most upgrades take at least a week to apply, and some may take even longer. Your DM will determine the exact time and cost of applying an upgrade, as well as if the process requires any special materials or tools. <br/>
                 &emsp;&emsp;Most adventurers will not have the skill or equipment required to apply upgrades themselves, and will need to seek out a skilled craftsman to do the work for them. Trivial upgrades can be applied by any skilled craftsman, while more complex upgrades may require someone with more specialized knowledge. When hiring a craftsman to apply an upgrade, the cost of their labor is included in the price of the upgrade, however they may grant discounts or charge premiums based on the circumstances. For example, if a kingdom is at war, the cost of applying upgrades may be higher, while if a craftsman is a friend of the party, they may offer a discount. The more skilled a craftsman is, the faster they can apply upgrades, and the more likely they are to charge a premium. <br/>
@@ -882,7 +886,7 @@ function HomepageWrapper(props) {
                     <li style={{marginBottom: "1em"}}><b>Tinker's Tools</b> - Used to apply upgrades to complex weapons made of metal such as firearms and explosives. </li>
                 </ul>
                 <p>
-                    &emsp;&emsp;If a character is proficient with the relevant artisan's tools, they may attempt to apply an upgrade themselves. To do so, they must collect materials equal to half the market price of the upgrade, as well as any special materials the DM deems necessary. They must then make a series of checks with the relevant artisan's tools with a DC of DC 20 + the # of upgrades already on the weapon. There are a number of factors that can affect the DC of these checks. For example: <br/>
+                    &emsp;&emsp;If a character is proficient with the relevant artisan's tools, they may attempt to apply an upgrade themselves. To do so, they must collect materials equal to half the market price of the upgrade, as well as any special materials the DM deems necessary. They must then make a series of checks with the relevant artisan's tools with a DC of 20 + the number of upgrades already applied to the weapon (with upgrade advancement counting as an additional upgrade). There are a number of factors that can affect the DC of these checks. For example: <br/>
                     <br/>
                     <table style={{width: "60%", marginLeft: "20%", border: "1px solid grey", borderCollapse: "collapse", textAlign: "center"}}>
                         <tr style={{border: "1px solid grey"}}>
@@ -922,7 +926,7 @@ function HomepageWrapper(props) {
                             <td style={{border: "1px solid grey"}}>+5</td>
                         </tr>
                         <tr>
-                            <td style={{border: "1px solid grey"}}> The weapon is enchanted or has special properties</td>
+                            <td style={{border: "1px solid grey"}}> The weapon is enchanted or otherwise has special properties</td>
                             <td style={{border: "1px solid grey"}}>+7</td>
                         </tr>
                     </table>
@@ -959,6 +963,7 @@ function App() {
     })
 
     //Print the length of the weapons object
+    console.log(Object.keys(weapons))
     console.log(Object.keys(weapons).length)
     console.log(Object.keys(upgrades).length)
     console.log(Object.keys(attributes).length)

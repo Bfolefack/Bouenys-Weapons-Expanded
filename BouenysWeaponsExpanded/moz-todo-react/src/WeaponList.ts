@@ -6,7 +6,7 @@ import { WeaponType } from "./Weapon";
 type WeaponMap = { [key: string]: Weapon };
 
 export var weapons: WeaponMap = {
-    // Basic
+    // General
     // Club	1 GP	1d4 bludgeoning	x2	x1	Light, Versatile(1d6)
     "Club": new Weapon(
         "Club",
@@ -16,9 +16,10 @@ export var weapons: WeaponMap = {
         3,
         1,
         0,
-        WeaponType.Basic,
+        WeaponType.General,
         [new Attribute(AttributeName.Light),
-        new Attribute(AttributeName.Ver, [1, 6])]
+        new Attribute(AttributeName.Ver, [1, 6])],
+        "The Club is a simple weapon that is little more than a thick, heavy stick. Perhaps the oldest weapon of all, a basic club can be carved with little effort from wood, bone, or even stone. It's a cheap and versatile weapon that can be used by just about anyone."
         ),
     // Dagger	2 GP	1d4 piercing	x2	x1	 Thrown(20/60), Finesse, Light
     "Dagger": new Weapon(
@@ -29,10 +30,11 @@ export var weapons: WeaponMap = {
         2,
         2,
         0,
-        WeaponType.Basic,
+        WeaponType.General,
         [new Attribute(AttributeName.Thrown, [20, 60]),
         new Attribute(AttributeName.Fine),
-        new Attribute(AttributeName.Light)]
+        new Attribute(AttributeName.Light)],
+        "The Dagger is the quintessential light weapon. A small, easily concealed blade, no more than a foot long, the dagger can be wielded as a sidearm or primary weapon. Easy to wield, but difficult to master, the dagger is a mainstay across all levels of combat."
     ),
     // Gauntlet	2 GP	1d4 bludgeoning	x3	x1	Glove, Light
     "Gauntlet": new Weapon(
@@ -43,10 +45,12 @@ export var weapons: WeaponMap = {
         3,
         1,
         0,
-        WeaponType.Basic,
+        WeaponType.General,
         [new Attribute(AttributeName.Glove),
         new Attribute(AttributeName.Fine),
-        new Attribute(AttributeName.Light)]),
+        new Attribute(AttributeName.Light)],
+        "The Gauntlet is more armor than weapon, but still packs a powerful punch. A glove reinforced with metal or other hard material, the gauntlet serves well as a weapon for those who prefer to keep their hands free."
+        ),
     // Light Crossbow	25 GP	1d8 piercing	x3	x2	Ammo (80/320), Loading, Two-Handed	
     "LightCrossbow": new Weapon(
         "Light Crossbow",
@@ -56,10 +60,12 @@ export var weapons: WeaponMap = {
         3,
         2,
         0,
-        WeaponType.Basic,
+        WeaponType.General,
         [new Attribute(AttributeName.Ammo, [80, 320]),
         new Attribute(AttributeName.Load),
-        new Attribute(AttributeName.Two)]),
+        new Attribute(AttributeName.Two)],
+        "The Light Crossbow is the go-to weapon for those who prefer to keep their distance. Typically built from a sturdy wood stock and a metal bow, the light crossbow packs the punch of  a bow, with a fraction of the training required."
+        ),
     // Quarterstaff	1 GP	1d6 bludgeoning	x2	x2	Versatile(1d8)
     "Quarterstaff": new Weapon(
         "Quarterstaff",
@@ -69,8 +75,10 @@ export var weapons: WeaponMap = {
         2,
         2,
         0,
-        WeaponType.Basic,
-        [new Attribute(AttributeName.Ver, [1, 8])]),
+        WeaponType.General,
+        [new Attribute(AttributeName.Ver, [1, 8])],
+        "The Quarterstaff is a long, sturdy staff of wood or bone, typically around six feet in length. A weapon that doubles as a walking stick, the quarterstaff is preferred by outdoorsmen and travelers for its versatility and utility."
+        ),
     // Agile
     // Scimitar	20 GP	1d6 slashing	19-20/x2	x1	Finesse, Light
     "Scimitar": new Weapon(
@@ -83,7 +91,8 @@ export var weapons: WeaponMap = {
         0,
         WeaponType.Agile,
         [new Attribute(AttributeName.Fine),
-        new Attribute(AttributeName.Light)]),
+        new Attribute(AttributeName.Light)],
+        "The Scimitar is a curved, single-edged sword that that is often wielded in pairs. Known for its flowing, elegant swordplay, the scimitar is a favorite among duelists and swashbucklers."),
     // Knuckleduster	5 GP	+2 bludgeoning	x2	x2	Glove, Light
     "Knuckleduster": new Weapon(
         "Knuckleduster",
@@ -93,15 +102,16 @@ export var weapons: WeaponMap = {
         2,
         2,
         0,
-        WeaponType.Basic,
+        WeaponType.General,
         [new Attribute(AttributeName.Glove),
         new Attribute(AttributeName.Fine),
-        new Attribute(AttributeName.Light)]),
+        new Attribute(AttributeName.Light)],
+        "The Knuckleduster is nothing more than a metal reinforcement for the hand, but it can turn a powerful punch deadly. A staple among the roughest brawlers, the knuckleduster, forgoes the finesse of a blade for amplifying the oldest weapon of all."),
     // Clawed Gauntlet	40 GP	1d6 slashing	x3	x2	Finesse, Glove, Light
-    "ClawedGauntlet": new Weapon(
-        "Clawed Gauntlet",
+    "SpikedGauntlet": new Weapon(
+        "Spiked Gauntlet",
         40,
-        new DiceFormula([[1, 6]], [DamageType.Slash]),
+        new DiceFormula([[1, 6]], [DamageType.Pier]),
         20,
         3,
         2,
@@ -109,7 +119,9 @@ export var weapons: WeaponMap = {
         WeaponType.Agile,
         [new Attribute(AttributeName.Fine),
         new Attribute(AttributeName.Glove),
-        new Attribute(AttributeName.Light)]),
+        new Attribute(AttributeName.Light)],
+        "The Spiked Gauntlet is a metal glove with sharp, claw-like protrusions. A simple improvement on the basic gauntlet, the spiked gauntlet offers an extra dose of brutality compared to its simpler cousin."
+        ),
     // Gauche	15 GP	1d4 piercing	x2	x2	Finesse, Light
     "Gauche": new Weapon(
         "Gauche",
@@ -121,7 +133,10 @@ export var weapons: WeaponMap = {
         1,
         WeaponType.Agile,
         [new Attribute(AttributeName.Fine),
-        new Attribute(AttributeName.Light)]),
+        new Attribute(AttributeName.Light)],
+        "The Gauche is a small, light weapon that is often wielded in the off-hand. Similar to a dagger, but with a longer, thinner blade, and curved crossguard for disarming opponents, the gauche is a classier weapon for a more refined fighter."
+        
+        ),
     // Poisoner's Dagger	30 GP	1d4 piercing	x2	x2	Thrown(20/50), Delicate, Fillable,  Light
     "PoisonersDagger": new Weapon(
         "Poisoner's Dagger",
@@ -135,7 +150,9 @@ export var weapons: WeaponMap = {
         [new Attribute(AttributeName.Thrown, [20, 50]),
         new Attribute(AttributeName.Deli),
         new Attribute(AttributeName.Fill),
-        new Attribute(AttributeName.Light)]),
+        new Attribute(AttributeName.Light)],
+        "The Poisoner's Dagger is an otherwise ordinary dagger that has been modified to hold a small amount of liquid or powder poison indefinitely. Designed with a button in for easy release, the poisoner's dagger lets its wielder choose whether a strike will be painful or deadly."
+        ),
     // Poisoner's Needle	100 GP	-	-	-	Thrown(20/40), Delicate, Fillable, Special
     "PoisonersNeedle": new Weapon(
         "Poisoner's Needle",
@@ -149,7 +166,9 @@ export var weapons: WeaponMap = {
         [new Attribute(AttributeName.Thrown, [20, 40]),
         new Attribute(AttributeName.Deli),
         new Attribute(AttributeName.Fill),
-        new Attribute(AttributeName.Spec)]),
+        new Attribute(AttributeName.Spec)],
+        "The Poisoner's Needle tows the line between weapon and tool. A small, thin needle with a hollow core, the poisoner's needle is designed to deliver a small amount of liquid or powder poison to a target. The needle used up close, or thrown with deadly accuracy, is so small and sharp that it can be used to deliver poison without the victim even noticing."
+        ),
     // Chain Blade	15 GP	1d6 slashing	x3	x2	Finesse, Reach
     "ChainBlade": new Weapon(
         "Chain Blade",
@@ -161,7 +180,8 @@ export var weapons: WeaponMap = {
         1,
         WeaponType.Agile,
         [new Attribute(AttributeName.Fine),
-        new Attribute(AttributeName.Reach)]),
+        new Attribute(AttributeName.Reach)],
+        "The Chain Blade is a weapon that combines the reach of a polearm with the finesse of a dagger. A thick, heavy blade attached to a long chain, the chain blade is a difficult weapon to master, but offers a unique blend of reach and agility."),
     // Hook Sword	20 GP	1d6 slashing	x3	x3	Delicate, Light, Special
     "HookSword": new Weapon(
         "Hook Sword",
@@ -174,7 +194,8 @@ export var weapons: WeaponMap = {
         WeaponType.Agile,
         [new Attribute(AttributeName.Deli),
         new Attribute(AttributeName.Light),
-        new Attribute(AttributeName.Spec)]),
+        new Attribute(AttributeName.Spec)],
+        "The Hook Sword is an unusual weapon that takes the agility of a scimitar and adds a unique twist. A long, thin single-edged blade with a hook at the end, the hook sword is a weapon that allows for dramatic flourishes extending its reach beyond what a normal sword could manage."),
     // Rapier	30 GP	1d8 piercing	19-20/x3	x2	Delicate, Parry
     "Rapier": new Weapon(
         "Rapier",
@@ -185,7 +206,9 @@ export var weapons: WeaponMap = {
         2,
         1,
         WeaponType.Agile,
-        [new Attribute(AttributeName.Deli)]),
+        [new Attribute(AttributeName.Deli)],
+        "The Rapier is a staple of the duelist's arsenal. A long, thin blade with a sharp point, the rapier is a weapon that rewards precision and finesse. As much a status symbol as it is a weapon, the rapier is the weapon of choice for those who prefer to fight with style."
+        ),
     // Whip Sword	1,000 GP	2d6 slashing	19-20/x3	x4	Delicate, Reach
     "WhipSword": new Weapon(
         "Whip Sword",
@@ -197,7 +220,8 @@ export var weapons: WeaponMap = {
         2,
         WeaponType.Agile,
         [new Attribute(AttributeName.Deli),
-        new Attribute(AttributeName.Reach)]),
+        new Attribute(AttributeName.Reach)],
+        "The Whip Sword is a truly unique weapon that combines the reach of a whip with the cutting power of a blade. Composed of several thin, interlocking blades, connected by a flexible chain, the whip sword is a weapon that is as difficult to master as it is deadly."),
     // Rapier + Gauche	60 GP	(1d8 + 1d4)	19-20/x4	x3, x3	Delicate, Special
     "RapierGauche": new Weapon(
         "Rapier + Gauche",
@@ -205,11 +229,12 @@ export var weapons: WeaponMap = {
         new DiceFormula([[1, 8], [1, 4]], [DamageType.Pier, DamageType.Pier]),
         19,
         4,
-        3,
+        5,
         2,
         WeaponType.Agile,
         [new Attribute(AttributeName.Deli),
-        new Attribute(AttributeName.Spec)]),
+        new Attribute(AttributeName.Spec)],
+        "The Rapier and Gauche is a weapon combination that goes beyond simple dual-wielding. Two blades that must be made for each other, the rapier and gauche are a deadly combination that allows for a unique style of fighting that is as elegant as it is deadly."),
     // Chain Gauntlets	700 GP	1d6 bludgeoning	x2	x4	Finesse, Glove, Light, Special
     "ChainGauntlets": new Weapon(
         "Chain Gauntlets",
@@ -224,7 +249,8 @@ export var weapons: WeaponMap = {
         new Attribute(AttributeName.Fine),
         new Attribute(AttributeName.Glove),
         new Attribute(AttributeName.Light),
-        new Attribute(AttributeName.Spec)]),
+        new Attribute(AttributeName.Spec)],
+        "The Chain Gauntlets improve on the basic gauntlet by incorporating a long chain that stows by wrapping around the forearm. This chain grants unparalleled mastery of reach and control on the battlefield, allowing the wielder to strike from a distance or pull enemies into range."),
     // Polearm					
     // Shortspear	1 GP	1d6 piercing	x2	x1	Thrown(15/30), Versatile(1d8)
     "Shortspear": new Weapon(
@@ -237,7 +263,8 @@ export var weapons: WeaponMap = {
         0,
         WeaponType.Polearm,
         [new Attribute(AttributeName.Thrown, [15, 30]),
-        new Attribute(AttributeName.Ver, [1, 8])]),
+        new Attribute(AttributeName.Ver, [1, 8])],
+        "The Shortspear is standard issue for many armies and militias. The most simple of polearms, the shortspear consists of a sturdy wooden shaft with a sharp point of metal or stone, making it an effective weapon for both thrusting and throwing."),
     // Trident	35 GP	1d6 piercing	x3	x1	Submersible, Thrown(20/60), Versatile(1d8)
     "Trident": new Weapon(
         "Trident",
@@ -250,7 +277,8 @@ export var weapons: WeaponMap = {
         WeaponType.Polearm,
         [new Attribute(AttributeName.Sub),
         new Attribute(AttributeName.Thrown, [20, 60]),
-        new Attribute(AttributeName.Ver, [1, 8])]),
+        new Attribute(AttributeName.Ver, [1, 8])],
+        "The Trident is the traditional weapon of the sea-faring warrior. A three-pronged spear originally developed for fishing, the trident is as deadly on land as it is in the water."),
     // Bostaff	10 GP	1d6 bludgeoning	19-20/x2	x4	Reach, Versatile (1d8)
     "Bostaff": new Weapon(
         "Bostaff",
@@ -262,7 +290,8 @@ export var weapons: WeaponMap = {
         0,
         WeaponType.Polearm,
         [new Attribute(AttributeName.Reach),
-        new Attribute(AttributeName.Ver, [1, 8])]),
+        new Attribute(AttributeName.Ver, [1, 8])],
+        "The Bostaff is a deceptively simple weapon favored by monks and martial artists. A long, sturdy staff of carefully carved, crafted, and balanced wood, metal, or bone, the bostaff is a weapon that rewards skill and precision above all else."),
     // Glaive	20 GP	1d10 slashing	19-20/x3	x2	Finesse, Heavy, Reach, Two-Handed
     "Glaive": new Weapon(
         "Glaive",
@@ -276,7 +305,8 @@ export var weapons: WeaponMap = {
         [new Attribute(AttributeName.Fine),
         new Attribute(AttributeName.Heavy),
         new Attribute(AttributeName.Reach),
-        new Attribute(AttributeName.Two)]),
+        new Attribute(AttributeName.Two)],
+        "The Glaive is a weapon that combines the reach of a polearm with the cutting power of a sword. A long, thin blade mounted on a sturdy wooden shaft, the glaive combines the best of both worlds, allowing for a killing strike without giving an enemy the same opportunity."),
     // Great Trident	70 GP	1d8 piercing	x3	x2	Heavy, Reach, Submersible, Versatile(1d10)
     "GreatTrident": new Weapon(
         "Great Trident",
@@ -290,7 +320,8 @@ export var weapons: WeaponMap = {
         [new Attribute(AttributeName.Heavy),
         new Attribute(AttributeName.Reach),
         new Attribute(AttributeName.Sub),
-        new Attribute(AttributeName.Ver, [1, 10])]),
+        new Attribute(AttributeName.Ver, [1, 10])],
+        "The Great Trident improvews on its smaller cousin by adding a longer shaft and a larger, more deadly head. A weapon that is as effective on land as it is in the water, the great trident is a weapon that commands respect across the seas."),
     // Lance	100 GP	1d12 piercing	x3	x2	Heavy, Reach, Special
     "Lance": new Weapon(
         "Lance",
@@ -303,11 +334,12 @@ export var weapons: WeaponMap = {
         WeaponType.Polearm,
         [new Attribute(AttributeName.Heavy),
         new Attribute(AttributeName.Reach),
-        new Attribute(AttributeName.Spec)]),
+        new Attribute(AttributeName.Spec)],
+        "The lance is a weapon designed for the knight in shining armor. A long, sturdy polearm with a sharp point, the lance is a weapon that can only be wielded effectively from horseback. Synonymous with the charge of the cavalry, the lance is a weapon that can break through even the most stalwart phalanx."),
     // Longspear	25 GP	1d8 piercing	x2	x2	Thrown(20/60), Heavy, Reach, Versatile(1d10)
     "Longspear": new Weapon(
         "Longspear",
-        25,
+        30,
         new DiceFormula([[1, 8]], [DamageType.Pier]),
         20,
         2,
@@ -317,19 +349,23 @@ export var weapons: WeaponMap = {
         [new Attribute(AttributeName.Thrown, [20, 60]),
         new Attribute(AttributeName.Heavy),
         new Attribute(AttributeName.Reach),
-        new Attribute(AttributeName.Ver, [1, 10])]),
+        new Attribute(AttributeName.Ver, [1, 10])],
+        "The Longspear improves on the basic shortspear by adding a longer shaft and a larger, more deadly head. Cheaper and easier to wield than a sword, the longspear is the weapon of choice for humble foot-soldiers and guards the world over."),
     // Pike	30 GP	1d8 piercing	19-20/x2	x2	Heavy, Reach
     "Pike": new Weapon(
         "Pike",
-        30,
-        new DiceFormula([[1, 8]], [DamageType.Pier]),
+        15,
+        new DiceFormula([[1, 10]], [DamageType.Pier]),
         19,
-        2,
+        3,
         2,
         1,
         WeaponType.Polearm,
         [new Attribute(AttributeName.Heavy),
-        new Attribute(AttributeName.Reach)]),
+        new Attribute(AttributeName.Reach),
+        new Attribute(AttributeName.Two)],
+        "The Pike is a weapon made for piercing and piercing alone. Longer, thicker, and heavier than a spear, the pike is a weapon that is designed to keep enemies at bay. Rarely wielded without a shieldsman to protect them, pikes form the heart of many armies' formations."),
+
     // Halberd	700 GP	2d8 slashing	18-20/x2	x2	Heavy, Reach, Two-Handed
     "Halberd": new Weapon(
         "Halberd",
@@ -342,7 +378,8 @@ export var weapons: WeaponMap = {
         WeaponType.Polearm,
         [new Attribute(AttributeName.Heavy),
         new Attribute(AttributeName.Reach),
-        new Attribute(AttributeName.Two)]),
+        new Attribute(AttributeName.Two)],
+        "The Halberd is crowned by many as the king of polearms. Consisting of an axe blade mounted on a long shaft, with a spike on top, and a hook on the back, the halberd is a weapon that can cleave, pierce, and disarm with ease. A weapon that denotes status and skill on the battlefield, the halberd is a weapon feared by those who face it."),
     // Imperial Lance	600 GP	2d12 piercing	x3	x3	Heavy, Reach(15ft), Special
     "ImperialLance": new Weapon(
         "Imperial Lance",
@@ -355,7 +392,8 @@ export var weapons: WeaponMap = {
         WeaponType.Polearm,
         [new Attribute(AttributeName.Heavy),
         new Attribute(AttributeName.Reach, [15]),
-        new Attribute(AttributeName.Spec)]),
+        new Attribute(AttributeName.Spec)],
+        "The Imperial Lance is a weapon that is as much a symbol of power as it is a weapon of war. The longest and heaviest of all polearms, the imperial lance allows one soldier to control the battlefield like no other. Often ornately decorated and passed down through generations, the imperial lance commonly serves as the center of a king's guard or the vanguard of a noble's army."),
     // Cleaving					
 
     // Broadsword	15 GP	1d8 slashing	19-20/x2	x1	-
@@ -368,7 +406,8 @@ export var weapons: WeaponMap = {
         1,
         0,
         WeaponType.Cleaving,
-        []),
+        [],
+        "The Broadsword is just that, a broad, heavy sword that is designed for cutting and cleaving. A weapon that is as simple as it is effective, the broadsword is a weapon that is favored by those who prefer to let their weapon do the talking."),
     // Handaxe	5 GP	1d6 slashing	x3	x1	Light
     "Handaxe": new Weapon(
         "Handaxe",
@@ -379,7 +418,8 @@ export var weapons: WeaponMap = {
         1,
         0,
         WeaponType.Cleaving,
-        [new Attribute(AttributeName.Light)]),
+        [new Attribute(AttributeName.Light)],
+        "The Handaxe is a small single-handed axe that is designed for cutting and chopping. Designed as a survival tool, that can be used as a weapon in a pinch, the handaxe is a weapon that is perfect for those who prefer to travel light."),
     // Sickle	1 GP	1d4 slashing	x2	x1	Finesse, Light
     "Sickle": new Weapon(
         "Sickle",
@@ -391,19 +431,21 @@ export var weapons: WeaponMap = {
         0,
         WeaponType.Cleaving,
         [new Attribute(AttributeName.Fine),
-        new Attribute(AttributeName.Light)]),
+        new Attribute(AttributeName.Light)],
+        "The Sickle is a farming implement that has been repurposed as a weapon. A curved blade mounted on a short handle, the sickle is a symbol of rebellion and revolution of the common folk, striking fear into the hearts of nobles and tyrants."),
     // Shortsword	10 GP	1d6 slashing	19-20/x2	x1	Finesse, Light
     "Shortsword": new Weapon(
         "Shortsword",
         10,
-        new DiceFormula([[1, 6]], [DamageType.Slash]),
+        new DiceFormula([[1, 6]], [DamageType.Pier]),
         19,
         2,
         1,
         0,
         WeaponType.Cleaving,
         [new Attribute(AttributeName.Fine),
-        new Attribute(AttributeName.Light)]),
+        new Attribute(AttributeName.Light)],
+        "The Shortsword is a simple, straight sword designed for close-quarters combat. Longer than a dagger, but shorter than a longsword, the shortsword is a weapon that is favored by those who prefer to keep their enemies close."),
     // Battleaxe	20 GP	1d8 slashing	x3	x1	Versatile(1d10)
     "Battleaxe": new Weapon(
         "Battleaxe",
@@ -411,10 +453,11 @@ export var weapons: WeaponMap = {
         new DiceFormula([[1, 8]], [DamageType.Slash]),
         20,
         3,
-        1,
+        2,
         1,
         WeaponType.Cleaving,
-        [new Attribute(AttributeName.Ver, [1, 10])]),
+        [new Attribute(AttributeName.Ver, [1, 10])],
+        "The Battleaxe may be less precise than a sword, but it makes up for it with raw power. Consisting of a heavy, double-bladed axe mounted on a sturdy shaft, the battleaxe can deliver devastating blows capable of cleaving through armor, flesh, and bone in a single stroke."),
     // Whip	5 GP	1d6 slashing	x3	x2	Finesse, Light, Reach
     "Whip": new Weapon(
         "Whip",
@@ -427,19 +470,21 @@ export var weapons: WeaponMap = {
         WeaponType.Agile,
         [new Attribute(AttributeName.Fine),
         new Attribute(AttributeName.Light),
-        new Attribute(AttributeName.Reach)]),
+        new Attribute(AttributeName.Reach)],
+        "The Whip is a weapon of control and precision. A long, flexible length of leather or chain, the whip is a symbol of power and authority. Though rare on the battlefield, the whip is exceptional in single combat, and well known for its signature thundering crack."),
     // Scythe	10 GP	2d4 slashing	x2	x2	Reach, Two-Handed
-    "BattleScythe": new Weapon(
-        "Battle Scythe",
+    "Scythe": new Weapon(
+        "Scythe",
         15,
         new DiceFormula([[2, 4]], [DamageType.Slash]),
         20,
         2,
-        2,
+        3,
         1,
         WeaponType.Cleaving,
         [new Attribute(AttributeName.Reach),
-        new Attribute(AttributeName.Two)]),
+        new Attribute(AttributeName.Two)],
+        "The Scythe is unique among weapons with an apparent impracticality at first glance. A long, curved blade mounted on a straight shaft, the scythe was originally designed for harvesting crops. Closely associated with the inevitability of death, the scythe lives up to its reputation on the battlefield, capable of reaping scores of enemies like stalks of wheat."),
     // Longsword	30 GP	1d10 slashing	19-20/x2	x2	Heavy, Versatile(1d12)
     "Longsword": new Weapon(
         "Longsword",
@@ -451,7 +496,9 @@ export var weapons: WeaponMap = {
         1,
         WeaponType.Cleaving,
         [new Attribute(AttributeName.Heavy),
-        new Attribute(AttributeName.Ver, [1, 12])]),
+        new Attribute(AttributeName.Ver, [1, 12])],
+        "The Longsword is the weapon of knights and nobles. A straight, double-edged blade mounted on a sturdy hilt, the longsword is a reliable weapon that embodies the ideals of chivalry and honor. Its balanced and neutral design have led to dozens of distinct styles of swordplay, cementing the longsword as staple of the battlefield."),
+
     // Greatsword	50 GP	2d6 slashing	19-20/x2	x2	Heavy, Two-Handed
     "Greatsword": new Weapon(
         "Greatsword",
@@ -463,7 +510,8 @@ export var weapons: WeaponMap = {
         1,
         WeaponType.Cleaving,
         [new Attribute(AttributeName.Heavy),
-        new Attribute(AttributeName.Two)]),
+        new Attribute(AttributeName.Two)],
+        "The Greatsword forgoes the manuverability of smaller blades for raw cleaving power. A large, two-handed sword with a long, straight blade, the greatsword is a weapon that can cleave through armor, flesh, and bone with ease. Too heavy to wield with a shield, the greatword is weapon wielded by those who face battle without fear of the consequences."),
     // Greataxe	35 GP	1d12 slashing	x3	x2	Heavy, Two-Handed
     "Greataxe": new Weapon(
         "Greataxe",
@@ -475,20 +523,22 @@ export var weapons: WeaponMap = {
         1,
         WeaponType.Cleaving,
         [new Attribute(AttributeName.Heavy),
-        new Attribute(AttributeName.Two)]),
+        new Attribute(AttributeName.Two)],
+        "The Greataxe is a weapon that is as simple as it is brutal. A heavy, single or double-bladed axe mounted on a long shaft, the greataxe is a weapon that can cleave through armor, flesh, and bone in a single stroke. Each swing  of a greataxe carries tremendous force, capable of delivering devastating blows that can turn the tide of battle in an instant."),
     // Greatscythe	40 GP	3d4 slashing	x2	x2	Heavy, Two-Handed, Reach
     "Greatscythe": new Weapon(
         "Greatscythe",
         40,
-        new DiceFormula([[3, 4]], [DamageType.Slash]),
+        new DiceFormula([[4, 4]], [DamageType.Slash]),
         20,
         2,
+        4,
         2,
-        1,
         WeaponType.Cleaving,
         [new Attribute(AttributeName.Heavy),
         new Attribute(AttributeName.Two),
-        new Attribute(AttributeName.Reach)]),
+        new Attribute(AttributeName.Reach)],
+        "The Greatscythe is a weapon of grim elegance and lethal efficiency. With a long, curved blade mounted on an extended shaft, it's barely even recognizable as the farming implement it's designed after, instead bringing the image of the reaper to the mind of any unfortunate enough to face it. The Greatscythe easily lives up to its name and reputation. Rather than reaping crops, it reaps lives."),
     // Claymore	500 GP	2d10 slashing	19-20/x2	x3	Heavy, Two-Handed
     "Claymore": new Weapon(
         "Claymore",
@@ -500,7 +550,8 @@ export var weapons: WeaponMap = {
         2,
         WeaponType.Cleaving,
         [new Attribute(AttributeName.Heavy),
-        new Attribute(AttributeName.Two)]),
+        new Attribute(AttributeName.Two)],
+        "The Claymore is the true pinnacle of cleaving weapons. With its almost comically large blade, this formidable weapon delivers devastating cleaving blows capable of cutting through multiple foes and heavy armor with ease. A symbol of unparalleled strength and skill, the claymore has become a weapon of legend, singlehandedly rending entire armies asunder."),
     // War Axe	700 GP	3d6 slashing	x3	x3	Heavy, Two-Handed
     "WarAxe": new Weapon(
         "War Axe",
@@ -512,7 +563,8 @@ export var weapons: WeaponMap = {
         2,
         WeaponType.Cleaving,
         [new Attribute(AttributeName.Heavy),
-        new Attribute(AttributeName.Two)]),
+        new Attribute(AttributeName.Two)],
+        "The War Axe is truly king among axes. A massive, double-bladed weapon that can cut through entire ranks of enemies with a single swing, the war axe embodies the devastation of war itself. Its heavy, reinforced blades are designed to cleave through armor, shields, and flesh alike, leaving destruction in its wake."),
     // Warwhip	150 GP	2d8 slashing	x3	x4	Finesse,  Heavy, Reach
     "Warwhip": new Weapon(
         "Warwhip",
@@ -525,7 +577,8 @@ export var weapons: WeaponMap = {
         WeaponType.Agile,
         [new Attribute(AttributeName.Fine),
         new Attribute(AttributeName.Heavy),
-        new Attribute(AttributeName.Reach)]),
+        new Attribute(AttributeName.Reach)],
+        "The Warwhip is an imposing variation on the traditional whip, designed for greater reach, impact, and pain. This larger, heavier whip consists of a length of reinforced, braided leather or metal chain, capable of delivering powerful, sweeping strikes. Its increased weight and durability is suitable for cracking through armor and crushing bone. The warwhip is a weapon of control and destruction, dominating the battlefield with its fearsome thundering crack."),
     // Brutal        
     // Mace	5 GP	1d6 bludgeoning	x3	x1	Heavy
     "Mace": new Weapon(
@@ -537,7 +590,8 @@ export var weapons: WeaponMap = {
         1,
         0,
         WeaponType.Brutal,
-        [new Attribute(AttributeName.Heavy)]),
+        [new Attribute(AttributeName.Heavy)],
+        "The Mace is a classic weapon of blunt force, designed to crush and incapacitate with sheer impact. Featuring a heavy, often spiked or flanged head mounted on a sturdy shaft, the mace is a weapon that can shatter bones and armor alike."),
     // War pick	5 GP	1d8 piercing	x2	x1	Heavy
     "WarPick": new Weapon(
         "War Pick",
@@ -548,7 +602,8 @@ export var weapons: WeaponMap = {
         1,
         0,
         WeaponType.Brutal,
-        [new Attribute(AttributeName.Heavy)]),
+        [new Attribute(AttributeName.Heavy)],
+        "The War Pick is a weapon designed for piercing and puncturing armor. A heavy, pointed head mounted on a sturdy shaft, the war pick is a weapon that can penetrate even the thickest plate armor."),
     // Light hammer	2 GP	1d4 bludgeoning	x2	x1	Thrown (20/60), Light
     "LightHammer": new Weapon(
         "Light Hammer",
@@ -560,30 +615,33 @@ export var weapons: WeaponMap = {
         0,
         WeaponType.Brutal,
         [new Attribute(AttributeName.Thrown, [20, 60]),
-        new Attribute(AttributeName.Light)]),
+        new Attribute(AttributeName.Light)],
+        "The Light Hammer is a simple weapon that is designed for throwing and striking. A small, heavy head mounted on a short shaft, the light hammer is a weapon that can deliver a stunning blow in close quarters or at range."),
     // Warhammer	40 GP	1d8 bludgeoning	x3	x2	Versatile(1d10)
     "Warhammer": new Weapon(
         "Warhammer",
         40,
         new DiceFormula([[1, 8]], [DamageType.Blud]),
         20,
-        3,
+        2,
         2,
         1,
         WeaponType.Brutal,
-        [new Attribute(AttributeName.Ver, [1, 10])]),
+        [new Attribute(AttributeName.Ver, [1, 10])],
+        "The Warhammer is a versitle and formidable weapon, that strikes a balance between power and versatility. With a solid, often spiked or flanged head mounted on a medium-length shaft, the warhammer is designed to deliver crushing blows that can pierce armor and break bones."),
     // Greatclub	1 GP	2d4 bludgeoning	x2	x2	 Heavy, Two-Handed
     "Greatclub": new Weapon(
         "Greatclub",
         3,
-        new DiceFormula([[2, 4]], [DamageType.Blud]),
+        new DiceFormula([[1, 8]], [DamageType.Blud]),
         20,
-        2,
+        3,
         2,
         1,
         WeaponType.Brutal,
         [new Attribute(AttributeName.Heavy),
-        new Attribute(AttributeName.Two)]),
+        new Attribute(AttributeName.Two)],
+        "The Greatclub is a simple weapon that is designed for crushing and bludgeoning. A large, heavy club made from a solid piece of wood, stone, or metal, the greatclub is a weapon that can deliver a devastating blow in close quarters."),
     // Flail	10 GP	1d8 bludgeoning	x2	x2	Versatile(1d10)
     "Flail": new Weapon(
         "Flail",
@@ -594,58 +652,50 @@ export var weapons: WeaponMap = {
         2,
         1,
         WeaponType.Brutal,
-        [new Attribute(AttributeName.Ver, [1, 10])]),
+        [new Attribute(AttributeName.Reach), new Attribute(AttributeName.Heavy)],
+        "The Flail is a weapon that is as unpredictable as it is deadly. Consisting a heavy, spiked or flanged head mounted on a long chain, the flail weaponizes momentum from a safe distance, allowing the wielder to deliver devastating blows that can crush armor and break bones."),
     // Maul	10 GP	3d4 bludgeoning	x2	x2	Heavy, Two-Handed
     "Maul": new Weapon(
         "Maul",
         10,
         new DiceFormula([[2, 6]], [DamageType.Blud]),
         20,
-        2,
+        3,
         2,
         1,
         WeaponType.Brutal,
         [new Attribute(AttributeName.Heavy),
-        new Attribute(AttributeName.Two)]),
+        new Attribute(AttributeName.Two)],
+        "The Maul is a large two-handed weapon that is designed for crushing and bludgeoning. A heavy, often spiked or flanged head mounted on a long shaft, the maul is a weapon that can deliver a devastating blow in close quarters."),
     // Morningstar	15 GP	1d8 piercing	x3	x2	Versatile(1d10)
     "Morningstar": new Weapon(
         "Morningstar",
         15,
-        new DiceFormula([[1, 8]], [DamageType.Pier]),
+        new DiceFormula([[2, 4]], [DamageType.Pier]),
         20,
-        3,
+        2,
         2,
         1,
         WeaponType.Brutal,
-        [new Attribute(AttributeName.Ver, [1, 10])]),
-    // Warclub	25 GP	1d12 bludgeoning	x3	x2	Heavy, Two-Handed
-    "Warclub": new Weapon(
-        "Warclub",
-        25,
-        new DiceFormula([[1, 12]], [DamageType.Blud]),
-        20,
-        3,
-        2,
-        1,
-        WeaponType.Brutal,
-        [new Attribute(AttributeName.Heavy),
-        new Attribute(AttributeName.Two)]),
+        [new Attribute(AttributeName.Ver, [2, 6]), new Attribute(AttributeName.Heavy)],
+        "The Morningstar is a weapon that is as versatile as it is deadly. A heavy, spiked head mounted on a sturdy shaft, the morningstar is a weapon held in high esteem by the devout for its ability to punch holes through heretics and heathens alike."),
     // Greathammer	800 GP	3d6 bludgeoning	x3	x3	Heavy, Two-Handed
     "Greathammer": new Weapon(
         "Greathammer",
         800,
         new DiceFormula([[3, 8]], [DamageType.Blud]),
         20,
-        3,
+        2,
         3,
         2,
         WeaponType.Brutal,
         [new Attribute(AttributeName.Heavy),
-        new Attribute(AttributeName.Two)]),
+        new Attribute(AttributeName.Two)],
+        "The Greathammer is the epitome of brute strength and overwhelming force on the battlefield. This massive, two-handed weapon consists of a colossal, reinforced head mounted on a long shaft, designed to deliver earth-shattering blows that can crush armor, bone, and spirit alike."),
     // Giant's Club	1,200 GP	2d12 bludgeoning	x4	x3	Heavy, Two-Handed
-    "GiantsClub": new Weapon(
-        "Giant's Club",
-        1200,
+    "Warclub": new Weapon(
+        "Warclub",
+        200,
         new DiceFormula([[2, 12]], [DamageType.Blud]),
         20,
         4,
@@ -653,7 +703,8 @@ export var weapons: WeaponMap = {
         2,
         WeaponType.Brutal,
         [new Attribute(AttributeName.Heavy),
-        new Attribute(AttributeName.Two)]),
+        new Attribute(AttributeName.Two)],
+        "The Warclub is a fearsome blunt force weapon that is as simple as it is brutal. A massive, heavy club made from a solid piece of wood, stone, or metal, the warclub is a weapon that can deliver bone-crushing blows that can shatter armor and break bones in a single stroke."),
     // Thrown					
     // Javelin (5)	1 GP	1d6 piercing	x3	x0	Thrown(30/120), Versatile(1d8)
     "Javelin": new Weapon(
@@ -666,20 +717,22 @@ export var weapons: WeaponMap = {
         0,
         WeaponType.Thrown,
         [new Attribute(AttributeName.Thrown, [30, 120]),
-        new Attribute(AttributeName.Ver, [1, 8])]),
+        new Attribute(AttributeName.Ver, [1, 8])],
+        "The Javelin is a simple weapon that is designed for throwing and piercing. A long, thin rod with a sharp point, the javelin is a weapon that can deal a great deal of damage at range."),
     // Boomerang	1 GP	1d4 bludgeoning	19-20/x2	x2	Thrown(30/120), Light, Returning
     "Boomerang": new Weapon(
         "Boomerang",
         0.8,
-        new DiceFormula([[1, 4]], [DamageType.Blud]),
+        new DiceFormula([[1, 6]], [DamageType.Blud]),
         19,
         2,
         2,
-        0,
+        1,
         WeaponType.Thrown,
         [new Attribute(AttributeName.Thrown, [30, 120]),
         new Attribute(AttributeName.Light),
-        new Attribute(AttributeName.Ret)]),
+        new Attribute(AttributeName.Ret)],
+        "The Boomerang stands out among thrown weapons for its ability to return to the thrower. A flat, curved piece of wood or metal, the boomerang is a weapon that can be thrown with great accuracy and force, before returning to the thrower's hand to be thrown again."),
     // Sling	1 GP	1d4 bludgeoning	x3	x3	Ammo(30/120)
     "Sling": new Weapon(
         "Sling",
@@ -690,7 +743,8 @@ export var weapons: WeaponMap = {
         2,
         0,
         WeaponType.Thrown,
-        [new Attribute(AttributeName.Ammo, [30, 120])]),
+        [new Attribute(AttributeName.Ammo, [30, 120])],
+        "The Sling is among the oldest and simplest of ranged weapons. A length of cord with a pouch at one end, the sling serves as a way to deliver small projectiles with deadly force and precision."),
     // Throwing Axe (5)	5 GP	1d4 slashing	x3	x1	Light, Thrown (20/60)
     "ThrowingAxe": new Weapon(
         "Throwing Axe",
@@ -702,8 +756,39 @@ export var weapons: WeaponMap = {
         0,
         WeaponType.Thrown,
         [new Attribute(AttributeName.Light),
-        new Attribute(AttributeName.Thrown, [20, 60])]),
-    // Blowgun	10 GP	1d4 piercing	x2	x2	Ammo(25/100), Loading, Two-Handed
+        new Attribute(AttributeName.Thrown, [20, 60])],
+        "The Throwing Axe is a small, single-handed axe that is designed for throwing and chopping. A small, heavy head mounted on a short shaft, the throwing axe is a weapon that can be thrown with surprising accuracy and force."),
+    // Grenade 10 GP 1d10 piercing + 1d10 fire x2 x2 Thrown (20/60), Light, Special
+    "Grenade": new Weapon(
+        "Grenade",
+        10,
+        new DiceFormula([[1, 10], [1, 10]], [DamageType.Pier, DamageType.Fire]),
+        20,
+        0,
+        0,
+        1,
+        WeaponType.Thrown,
+        [new Attribute(AttributeName.Light),
+        new Attribute(AttributeName.Thrown, [20, 60]),
+        new Attribute(AttributeName.Mis, [4, 2, 10]),
+        new Attribute(AttributeName.Spec)],
+        "The Grenade is a compact, hand-held explosive device designed for both offensive and defensive use. Small but incredibly powerful, grenades can be thrown to deliver a devastating blast that can incapacitate or eliminate multiple enemies within its radius. Not only are grenades deadly, but they are also versatile, coming in a variety of types, including fragmentation, incendiary, and smoke. Easy to carry and deploy, grenades are favored by soldiers, tactical units, and combatants for their ability to clear rooms, disrupt enemy formations, and create chaos on the battlefield."),
+    // Dart (10)	1 GP	1d4 piercing	x2	x1	Thrown(20/60), Finesse, Light
+    "Dart": new Weapon(
+        "Dart",
+        0.1,
+        new DiceFormula([[1, 4]], [DamageType.Pier]),
+        20,
+        2,
+        0,
+        0,
+        WeaponType.Thrown,
+        [new Attribute(AttributeName.Fine),
+        new Attribute(AttributeName.Light),
+        new Attribute(AttributeName.Thrown, [20, 60]),
+        new Attribute(AttributeName.Fill)],
+        "The Dart is a small, hand-held throwing weapon that is designed for precision and accuracy. A light, balanced shaft with a sharp point, the dart is a weapon that can be thrown with great accuracy and force, and filled with an array of deadly poisons to dramatic effect."),
+    // Blowgun	10 GP	1d4 piercing	x2	x2	Ammo(40/120), Loading, Two-Handed
     "Blowgun": new Weapon(
         "Blowgun",
         10,
@@ -713,9 +798,11 @@ export var weapons: WeaponMap = {
         2,
         1,
         WeaponType.Thrown,
-        [new Attribute(AttributeName.Ammo, [25, 100]),
+        [new Attribute(AttributeName.Ammo, [50, 150]),
         new Attribute(AttributeName.Load),
-        new Attribute(AttributeName.Two)]),
+        new Attribute(AttributeName.Two),
+        new Attribute(AttributeName.Fill)],
+        "The Blowgun is a deceptively primitive weapon that is capable of delivering deadly poisons with pinpoint accuracy. Built from a long, hollowed reed or rod with a mouthpiece at one end, the blowgun is a weapon that can deliver small, poisoned darts with deadly force."),
     // Harpoon	25 GP	1d10 piercing	x2	x1	Thrown(30/90), Heavy, Submersible, Two-Handed
     "Harpoon": new Weapon(
         "Harpoon",
@@ -729,7 +816,8 @@ export var weapons: WeaponMap = {
         [new Attribute(AttributeName.Thrown, [30, 90]),
         new Attribute(AttributeName.Heavy),
         new Attribute(AttributeName.Sub),
-        new Attribute(AttributeName.Two)]),
+        new Attribute(AttributeName.Two)],
+        "The Harpoon is a weapon that is as deadly in the water as it is on land. A long, heavy spear with a barbed head, the harpoon is a weapon that is designed to pierce and hold fast, making it a favorite of those who hunt targets sevral times their size."),
     // Throwing Knives (10)	30 GP	1d6 piercing	x3	x3	 Thrown(30/90), Finesse, Light,
     "ThrowingKnives": new Weapon(
         "Throwing Knives",
@@ -742,7 +830,8 @@ export var weapons: WeaponMap = {
         WeaponType.Thrown,
         [new Attribute(AttributeName.Thrown, [60, 180]),
         new Attribute(AttributeName.Fine),
-        new Attribute(AttributeName.Light)]),
+        new Attribute(AttributeName.Light)],
+        "The Throwing Knife is a small, hand-held throwing weapon typically wielded in sets. A light, balanced blade with a sharp point, the throwing knife is a weapon that can be thrown with great accuracy and force, making it a favorite of assassins and spies."),
     // Chakram	40 GP	1d8 slashing	18-20/x3	x3	Thrown(60/240), Light, Returning
     "Chakram": new Weapon(
         "Chakram",
@@ -756,20 +845,23 @@ export var weapons: WeaponMap = {
         [new Attribute(AttributeName.Fine),
         new Attribute(AttributeName.Thrown, [60, 240]),
         new Attribute(AttributeName.Light),
-        new Attribute(AttributeName.Ret)]),
-    // Archery       
+        new Attribute(AttributeName.Ret)],
+        "The Chakram is a weapon that is as deadly as it is beautiful. A flat, circular blade with a sharpened edge, the chakram is the pinnacle of thrown weapons, capable of delivering deadly blows with great accuracy and force, before returning to the thrower's hand to do it all over again."),
+    
+        // Elastic       
     // Shortbow	15 GP	1d6 piercing	x2	x1	Ammo (80/320), Two-Handed
     "Shortbow": new Weapon(
         "Shortbow",
         15,
         new DiceFormula([[1, 6]], [DamageType.Pier]),
-        20,
+        19,
         2,
-        1,
+        2,
         0,
-        WeaponType.Archery,
+        WeaponType.Elastic,
         [new Attribute(AttributeName.Ammo, [80, 320]),
-        new Attribute(AttributeName.Two)]),
+        new Attribute(AttributeName.Two)],
+        "The Shortbow is a staple among archers and hunters. A small, simple bow with a short draw length, the shortbow is a weapon that is easy to use and maintain, making it a favorite of those who prefer to travel light."),
     // Hand Crossbow	75 GP	1d6 piercing	x3	x2	Ammo(30/120), Light, Loading
     "HandCrossbow": new Weapon(
         "Hand Crossbow",
@@ -779,10 +871,11 @@ export var weapons: WeaponMap = {
         3,
         2,
         0,
-        WeaponType.Archery,
+        WeaponType.Elastic,
         [new Attribute(AttributeName.Ammo, [30, 120]),
         new Attribute(AttributeName.Light),
-        new Attribute(AttributeName.Load)]),
+        new Attribute(AttributeName.Load)],
+        "The Hand Crossbow is a small, single-handed crossbow that is designed for quick and easy use. Built from a heavy wooden stock with a metal or wooden bow atop for tension, the hand crossbow is a weapon that can deliver a deadly bolt with great accuracy and force."),  
     // Heavy Crossbow	50 GP	1d10 piercing	x3	x2	Ammo(100/400), Heavy, Loading, Two-Handed
     "HeavyCrossbow": new Weapon(
         "Heavy Crossbow",
@@ -792,79 +885,99 @@ export var weapons: WeaponMap = {
         3,
         2,
         1,
-        WeaponType.Archery,
+        WeaponType.Elastic,
         [new Attribute(AttributeName.Ammo, [100, 400]),
         new Attribute(AttributeName.Heavy),
         new Attribute(AttributeName.Load),
-        new Attribute(AttributeName.Two)]),
+        new Attribute(AttributeName.Two)],
+        "The Heavy Crossbow is a formidable ranged weapon, known for its exceptional power and precision. Featuring a robust wooden or metal stock and a reinforced bow, the heavy crossbow fires bolts with tremendous force, capable of piercing armor and inflicting serious damage at long distances."),
     // Longbow	90 GP	1d8 piercing	x2	x2	Ammo(150/600), Heavy, Two-Handed
     "Longbow": new Weapon(
         "Longbow",
         90,
         new DiceFormula([[1, 8]], [DamageType.Pier]),
-        20,
+        19,
         2,
-        2,
+        3,
         1,
-        WeaponType.Archery,
-        [new Attribute(AttributeName.Ammo, [150, 600]),
+        WeaponType.Elastic,
+        [new Attribute(AttributeName.Ammo, [200, 600]),
         new Attribute(AttributeName.Heavy),
-        new Attribute(AttributeName.Two)]),
+        new Attribute(AttributeName.Two)],
+        "The Longbow is a weapon of precision and power, favored by the most skilled skilled archers and hunters. A tall, powerful bow with a long draw length, the longbow is a weapon that can deliver deadly arrows with great accuracy and force, making it a favorite of those who prefer to strike from a distance."),
     // Recurve Bow	100 GP	1d10 piercing	x2	x2	Ammo(100/400), Heavy, Two-Handed
     "RecurveBow": new Weapon(
         "Recurve Bow",
         150,
         new DiceFormula([[1, 10]], [DamageType.Pier]),
-        20,
+        19,
         2,
         2,
         1,
-        WeaponType.Archery,
-        [new Attribute(AttributeName.Ammo, [100, 400]),
+        WeaponType.Elastic,
+        [new Attribute(AttributeName.Ammo, [140, 280]),
         new Attribute(AttributeName.Heavy),
-        new Attribute(AttributeName.Two)]),
+        new Attribute(AttributeName.Two)],
+        "The Recurve Bow is a weapon that is as elegant as it is deadly. A tall, powerful bow with a unique curved shape, the recurve bow's unique shape allows it to fire with much greater force than a flat bow of the same size, however this comes at the cost of diminished accuracy at range."),
     // Wrist Crossbow	150 GP	1d4 piercing	x3	x3	Ammo(30/120), Glove, Light, Loading
     "WristCrossbow": new Weapon(
         "Wrist Crossbow",
-        25,
-        new DiceFormula([[1, 4]], [DamageType.Pier]),
+        90,
+        new DiceFormula([[1, 6]], [DamageType.Pier]),
         20,
         3,
-        3,
+        2,
         1,
-        WeaponType.Archery,
-        [new Attribute(AttributeName.Ammo, [30, 120]),
+        WeaponType.Elastic,
+        [new Attribute(AttributeName.Ammo, [50, 150]),
         new Attribute(AttributeName.Glove),
         new Attribute(AttributeName.Light),
-        new Attribute(AttributeName.Load)]),
+        new Attribute(AttributeName.Load)],
+        "The Wrist Crossbow is a compact and discreet ranged weapon designed to be worn on the wrist, leaving the hands free. Despite its small size, the wrist crossbow can unfold with a flick of the wrist, to deliver a deadly bolt with great accuracy and force."),
     // Repeating Crossbow	300 GP	1d10 piercing	19-20/2x	x3	Ammo(100/400), Heavy, Two-Handed
     "RepeatingCrossbow": new Weapon(
         "Repeating Crossbow",
-        300,
+        400,
         new DiceFormula([[1, 10]], [DamageType.Pier]),
         20,
-        2,
+        3,
         3,
         2,
-        WeaponType.Archery,
-        [new Attribute(AttributeName.Ammo, [100, 400]),
+        WeaponType.Elastic,
+        [new Attribute(AttributeName.Ammo, [80, 320]),
         new Attribute(AttributeName.Heavy),
-        new Attribute(AttributeName.Two)]),
-    // Portable Ballista	650 GP	3d6 piercing	x3	x3	Ammo(200,800), Heavy, Loading, Stationary, Two-Handed
-    "PortableBallista": new Weapon(
-        "Portable Ballista",
-        650,
-        new DiceFormula([[3, 6]], [DamageType.Pier]),
+        new Attribute(AttributeName.Two)],
+        "The Repeating Crossbow is a unique and deadly ranged weapon that is capable of firing multiple bolts in rapid succession. Featuring an intricate mechanism of stacked or rotating bolts, the repeating crossbow can deliver hail of deadly fire with remarkable speed and efficiency."),
+    // Portable Ballista	700 GP	3d6 piercing	x3	x3	Ammo(200,800), Heavy, Loading, Stationary, Two-Handed
+    "Manuballista": new Weapon(
+        "Manuballista",
+        700,
+        new DiceFormula([[2, 12]], [DamageType.Pier]),
         20,
         3,
         3,
         2,
-        WeaponType.Archery,
+        WeaponType.Elastic,
         [new Attribute(AttributeName.Ammo, [200, 800]),
         new Attribute(AttributeName.Heavy),
         new Attribute(AttributeName.Load),
         new Attribute(AttributeName.Stat),
-        new Attribute(AttributeName.Two)]),
+        new Attribute(AttributeName.Two)],
+        "The Manuballista tows the line between siege weapon and personal armament, bringing the power of a ballista to the hands of a skilled warrior. With its robust construction and advanced mechanical design, the Manuballista can launch massive bolts with devastating force and accuracy, capable of punching through armor and breaking through fortifications."),
+    // Greatbow	500 GP	1d12 piercing	x2	x4	Ammo(100/400), Heavy, Two-Handed
+    "Greatbow": new Weapon(
+        "Greatbow",
+        500,
+        new DiceFormula([[1, 12]], [DamageType.Pier]),
+        19,
+        2,
+        4,
+        2,
+        WeaponType.Elastic,
+        [new Attribute(AttributeName.Ammo, [200, 700]),
+        new Attribute(AttributeName.Heavy),
+        new Attribute(AttributeName.Two)],
+        "The Greatbow is a colossal ranged weapon, designed for those who require both immense power and long-range accuracy. A massive, powerful bow with a long draw length, its size and draw weight require significant strength and skill to use effectively. Standing tall as a symbol of strength and lethal accuracy, the greatbow dominates the battlefield with its formidable presence and striking capability."),
     // Firearm
     // Handgone	50 GP	2d10 piercing	x10	x0	Ammo(60/240), Powder, Reload(1), Misfire(10/2d10)
     "Handgonne": new Weapon(
@@ -876,14 +989,15 @@ export var weapons: WeaponMap = {
         0,
         0,
         WeaponType.Firearm,
-        [new Attribute(AttributeName.Ammo, [60, 240]),
+        [new Attribute(AttributeName.Ammo, [40, 80]),
         new Attribute(AttributeName.Pow),
         new Attribute(AttributeName.Rel, [1]),
-        new Attribute(AttributeName.Mis, [10, 2, 10])]),
+        new Attribute(AttributeName.Mis, [10, 2, 10])],
+        "The Handgonne is certainly... a weapon. A primitive, single-shot firearm that is as likely to explode in your face as it is to hit your target with any degree of accuracy, The Handgonne is less than a last resort, and more of a desperate plea for help. You should seriously consider your life choices if you find yourself wielding one of these."),
     // Tommy Gun	65 GP	2d4 piercing	x2	x1	Ammo(120/360), Powder, Reload(-), Misfire(2/1d10), 
     "TommyGun": new Weapon(
         "Tommy Gun",
-        65,
+        100,
         new DiceFormula([[2, 4]], [DamageType.Pier]),
         20,
         2,
@@ -892,7 +1006,10 @@ export var weapons: WeaponMap = {
         WeaponType.Firearm,
         [new Attribute(AttributeName.Ammo, [50, 150]),
         new Attribute(AttributeName.Pow),
-        new Attribute(AttributeName.Mis, [2, 1])]),
+        new Attribute(AttributeName.Mis, [2, 1]),
+        new Attribute(AttributeName.Rel, [20]),
+        new Attribute(AttributeName.Two)],
+        "The Tommy Gun is a rapid-firing submachine gun that is as deadly as it is stylish. With its high rate of fire and large magazine capacity, the Tommy Gun is a weapon that can deliver a hail of bullets with deadly accuracy and force. That in conjuction with its relatively low cost and ease of use, the Tommy Gun has become a favorite of the criminal underworld."),
     // Revolver	250 GP	1d8 piercing	x2	x1	Ammo(60/240), Light, Powder, Reload(6), Misfire(1/1d10),
     "Revolver": new Weapon(
         "Revolver",
@@ -907,23 +1024,25 @@ export var weapons: WeaponMap = {
         new Attribute(AttributeName.Light),
         new Attribute(AttributeName.Pow),
         new Attribute(AttributeName.Rel, [6]),
-        new Attribute(AttributeName.Mis, [1, 1])]),
+        new Attribute(AttributeName.Mis, [1, 1])],
+        "The Revolver is a classic firearm that is as reliable as it is deadly. With its six-shot cylinder and high accuracy, the revolver offers a perfect blend of firepower and precision. Its robust design ensures dependable performance, making it a favored choice for lawmem, outlaws, and loners alike. Symbolizing both frontier justice and rugged individualism, the revolver remains an enduring icon of personal defense and tactical prowess."),
     // Firestarter	1,000 GP	3d8 fire	x2	x1	Ammo(15/15), Loading, Powder, Two-Handed, Misfire(3/3d10), Special
     "Firestarter": new Weapon(
         "Firestarter",
         1000,
-        new DiceFormula([[1, 8.001], [2, 8]], [DamageType.Blud, DamageType.Fire]),
+        new DiceFormula([[1, 8.0001], [2, 8]], [DamageType.Blud, DamageType.Fire]),
         20,
         2,
         1,
         1,
         WeaponType.Firearm,
-        [new Attribute(AttributeName.Ammo, [15, 15]),
+        [new Attribute(AttributeName.Ammo, [30, 60]),
         new Attribute(AttributeName.Load),
         new Attribute(AttributeName.Pow),
         new Attribute(AttributeName.Two),
         new Attribute(AttributeName.Mis, [3, 3]),
-        new Attribute(AttributeName.Spec)]),
+        new Attribute(AttributeName.Spec)],
+        "The Firestarter is an armament of utter chaos and destruction. A massive, two-handed hand cannon that fires incendiary slugs, the Firestarter is a weapon that can deliver a devastating blast of fire and shrapnel with deadly accuracy and force. As volatile as it is deadly, the Firestarter is truly a weapon for those who just want to watch the world burn."),
     // Pistol	300 GP	1d10 piercing	x2	x2	Ammo(60/180), Powder, Reload(8), Misfire(2/1d10)
     "Pistol": new Weapon(
         "Pistol",
@@ -937,7 +1056,8 @@ export var weapons: WeaponMap = {
         [new Attribute(AttributeName.Ammo, [60, 180]),
         new Attribute(AttributeName.Pow),
         new Attribute(AttributeName.Rel, [8]),
-        new Attribute(AttributeName.Mis, [2, 1])]),
+        new Attribute(AttributeName.Mis, [2, 1])],
+        "The Pistol is a versatile and widely-used firearm, known for its compact size and ease of use. With a magazine-fed design, the pistol can deliver a rapid succession of shots, making it ideal for both self-defense and combat situations. Its lightweight and ergonomic build allow for quick draw and maneuverability, ensuring effective performance in close-quarters engagements. The pistol's balance of accuracy, reliability, and firepower makes it a staple for military, law enforcement, and civilian use."),
     // Rifle	500 GP	1d12 piercing	x2	x2	Ammo(200/400), Powder, Reload(8), Two-Handed, Misfire(3/2d10)
     "Rifle": new Weapon(
         "Rifle",
@@ -967,7 +1087,8 @@ export var weapons: WeaponMap = {
         new Attribute(AttributeName.Pow),
         new Attribute(AttributeName.Rel, [2]),
         new Attribute(AttributeName.Two),
-        new Attribute(AttributeName.Mis, [2, 2])]),
+        new Attribute(AttributeName.Mis, [2, 2])],
+        "The Shotgun is a close-range firearm that is as devastating as it is iconic. With its wide spread and high stopping power, the shotgun's range may be limited, but its ability to deliver a devastating spray of pellets makes it unmatched in close-quarters combat. Each pull of the trigger releases a burst of projectiles, capable of shredding a target at close range and turning the tide of battle in an instant."),
     // Grenade Launcher	600 GP	1d10 piercing, 1d10 fire	x2	x2	Ammo(50/100), Powder, Reload(5), Two-Handed, Misfire(4/3d10)
     "GrenadeLauncher": new Weapon(
         "Grenade Launcher",
@@ -978,28 +1099,30 @@ export var weapons: WeaponMap = {
         2,
         1,
         WeaponType.Firearm,
-        [new Attribute(AttributeName.Ammo, [50, 100]),
+        [new Attribute(AttributeName.Ammo, [100]),
         new Attribute(AttributeName.Pow),
         new Attribute(AttributeName.Rel, [5]),
         new Attribute(AttributeName.Two),
-        new Attribute(AttributeName.Mis, [4, 3])]),
+        new Attribute(AttributeName.Mis, [4, 3])],
+        "The Grenade Launcher is a powerful and versatile weapon, designed to deliver explosive ordnance with precision and range. Capable of launching grenades over greater distances than human power alone, the grenade launcher can unleash devastating explosions that clear out fortified positions, destroy vehicles, and incapacitate groups of enemies. Its ability to fire various types of grenades, including fragmentation, smoke, and incendiary, adds to its tactical flexibility. While it may be bulkier and slower to reload than smaller firearms, the grenade launcher's impact and destructive potential make it an invaluable asset in combat scenarios."),
     // Minigun	2,000 GP	Xd6 piercing	x2	x3	Ammo(30), Heavy, Stationary, Powder, Two-Handed,  Misfire(X/Xd10), Special
     "Minigun": new Weapon(
         "Minigun",
         2000,
-        new DiceFormula([[1, 6]], [DamageType.Pier]),
+        new DiceFormula([[2, 6]], [DamageType.Pier]),
         20,
         2,
         3,
         2,
         WeaponType.Firearm,
-        [new Attribute(AttributeName.Ammo, [30]),
+        [new Attribute(AttributeName.Ammo, [80]),
         new Attribute(AttributeName.Heavy),
         new Attribute(AttributeName.Stat),
         new Attribute(AttributeName.Pow),
         new Attribute(AttributeName.Two),
-        new Attribute(AttributeName.Mis, [1, 1]),
-        new Attribute(AttributeName.Spec)]),
+        new Attribute(AttributeName.Mis, [2, 1]),
+        new Attribute(AttributeName.Spec)],
+        "The Minigun is a weapon of sheer devastation, capable of unleashing a hail of bullets with unparalleled speed and force. With its multiple rotating barrels and high rate of fire, the minigun can deliver a relentless storm of bullets that can cut through armor, flesh, and bone with ease. Its massive size and weight make it impractical for most individuals to wield, but in the hands of a skilled operator, the minigun can dominate the battlefield and turn the tide of any engagement."),
     // Sniper Rifle	1,800 GP	4d12 piercing	x4	x2	Ammo(60/300/900), Heavy, Stationary, Powder, Two-Handed, Misfire(3/4d10), Reload(1)
     "SniperRifle": new Weapon(
         "Sniper Rifle",
@@ -1016,5 +1139,6 @@ export var weapons: WeaponMap = {
         new Attribute(AttributeName.Pow),
         new Attribute(AttributeName.Two),
         new Attribute(AttributeName.Mis, [3, 4]),
-        new Attribute(AttributeName.Rel, [1])]),
+        new Attribute(AttributeName.Rel, [1])],
+        "The Sniper Rifle is a precision weapon that is as deadly as it is accurate. With its high-powered scope and long barrel, the sniper rifle is capable of delivering a devastating shot at extreme ranges. Its high caliber rounds can eliminate targets with a single deadly shot, making it a favored weapon for sharpshooters and marksmen."),
 };
