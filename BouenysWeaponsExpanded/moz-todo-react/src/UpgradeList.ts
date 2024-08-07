@@ -166,7 +166,7 @@ export var upgrades = {
         proficiencyCost: 1,
         description: "This weapon deals an extra die of damage against a creature that is incapacitated, restrained, grappled, or surprised.",
         advanceCost: 3,
-        advanceDescription: "This any attack you make with this weapon against a creature that is incapacitated, restrained, grappled, or surprised may be considered a critical hit."
+        advanceDescription: "Any attack you make with this weapon against a creature that is incapacitated, restrained, grappled, or surprised may be considered a critical hit."
     },
 
     // Extended Stock(+)
